@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目详情</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <link rel="stylesheet" href="../../weui/weui.css">
+    <script src="../../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../weui/jquery-weui.css">
+    <link rel="stylesheet" href="../../swiper/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../swiper/swiper.min.js"></script>
+    <script src="../../weui/zepto.js"></script>
+    <script src="../../weui/fastclick.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../weui/jquery-weui.js"></script>
+    <script src="../../js/util.js"></script>
+    <script type="text/javascript" src="../../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../hui/js/hui-accordion.js"></script>
+    <script type="text/javascript" src="../../js/doT.js"></script>
+    <script>
+         window.onload = function() {
+            setTimeout(function(){
+                var mySwiper = new Swiper('.swiper-container', {
+                      direction: 'horizontal',
+                      loop: true,
+                      autoplay: true,
+                      // 如果需要分页器
+                      pagination: '.swiper-pagination',
+                  })
+            },2000)
+         
+      }
+        var sessionid = localStorage.getItem("sessionid");
+        $(function() {
+            FastClick.attach(document.body);
+        });
+            var id=getQueryString("id");
+            var xmlb=getQueryString("xmlb");
+            var data={xmid:id};
+            if(xmlb=="ppp"){ //ppp
+                 zhget(YDPPPDetail+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#ppptempList").text())
+                    $('#xm_list').html(temp_text(result));
+                });
+            }
+            else if(xmlb=="jzkg"){
+                 //集中开工  
+                zhget(YDJZKGDetail+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#tempList").text());
+                    $('#xm_list').html(temp_text(result));
+                    console.log(JSON.stringify(result));
+                });
+            }
+            else{
+                 //重点项目 
+                zhget(YDZDXMDetail+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#tempList").text());
+                    $('#xm_list').html(temp_text(result));
+                    console.log(JSON.stringify(result));
+                });
+            }
+           
+           /*时间格式转换*/
+    function formatDate(date, format) {
+        if (!date) return;
+        if (!format) format = "yyyy-MM-dd";
+        switch (typeof date) {
+            case "string":
+                date = new Date(date.replace(/-/, "/"));
+                break;
+            case "number":
+                date = new Date(date);
+                break;
+        }
+        if (!date instanceof Date) return;
+        var dict = {
+            "yyyy": date.getFullYear(),
+            "M": date.getMonth() + 1,
+            "d": date.getDate(),
+            "H": date.getHours(),
+            "m": date.getMinutes(),
+            "s": date.getSeconds(),
+            "MM": ("" + (date.getMonth() + 101)).substr(1),
+            "dd": ("" + (date.getDate() + 100)).substr(1),
+            "HH": ("" + (date.getHours() + 100)).substr(1),
+            "mm": ("" + (date.getMinutes() + 100)).substr(1),
+            "ss": ("" + (date.getSeconds() + 100)).substr(1)
+        };
+        return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
+            return dict[arguments[0]];
+        });
+    }
+    </script>
+    <style>
+       body{
+            background-color: #F1F1F1;
+       }
+       .wrap{
+            margin: 10px;
+            background-color: #fff;
+       }
+       .xmmc{
+            color: #046DAE;
+            font-size: 20px;
+            margin: 10px 0;
+       }
+        .center{
+            text-align: center; 
+        }
+        li{
+            padding:5px;
+            border-bottom: 1px solid #eee;
+            /*height: 31px;*/
+            line-height: 31px;
+            color: #777;
+        }
+        p {
+            padding:5px;
+            border-bottom: 1px solid #eee;
+            line-height: 30px;
+            color: #777;
+        }
+        .bor{
+            color: #777;
+            margin-top: 3px;
+        }
+        .litter_tit{
+            color: #A73FC8;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        ul{
+            list-style: none;
+        }
+        .litter_tit{
+            padding-left:8px;
+        }
+        .swiper-container{
+            width:100%;
+            height: 200px;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="wrap" id="xm_list">
+    </div>
+    <!-- 重点项目和集中开工   -->
+    <script type="text/x-dot-template" id="tempList">
+        <div class="center xmmc" style="padding-top: 15px;">{{= it.xmMain.xmmc}}</div>
+        <ul>
+            <li class="litter_tit">基础信息</li>
+            <li>行业类别：{{= it.xmMain.xmlb.name}}</li>
+            <li>建设起止年限：{{= it.xmMain.jsnxq}} - {{= it.xmMain.jsnxz}}</li>
+            <li>投资主体：{{= it.xmMain.tzzt}}</li>
+            <li>总投资：{{= it.xmMain.ztz}} 万元</li>
+            <li>责任单位：{{= it.xmMain.zrdw.name}}</li>
+            <li>年度投资：{{= it.xmMain.njhtz}} 万元</li>
+            <li>建设地点：{{= it.xmMain.jsdd}}</li>
+            <li>截止{{= it.xmMain.jsnd-1}}年底完成投资：{{= it.xmMain.ljwctz}} 万元</li>
+            <li>预计开工时间：{{= it.xmMain.yjkgsj}}</li>
+            <li>建成时间：{{= it.xmMain.jcsj}}</li>
+            <li>投资来源：{{= it.xmMain.tzlyName}}</li>
+            <li>是否产业类项目：{{= it.xmMain.sfcylxmName}}</li>
+        </ul>
+        <p>建设内容及规模：{{= it.xmMain.jsnr}}</p>
+        <p>主要形象进度：{{= it.xmMain.jsnrNd}}</p>
+        <div>
+            <div class="litter_tit" style="margin-top: 10px;">联系方式</div>    
+            <ul>
+                    <li>联系人：{{= it.xmMain.llyName}}</li>
+                    <li>职务：{{= it.xmMain.llyJob}}</li>
+                    <li>联系方式：{{= it.xmMain.llyPhone1}}</li>
+            </ul>
+        </div>
+        <div>
+            <div class="litter_tit" style="margin-top: 10px;">用地信息</div>    
+            <ul>
+                    <li>用地总规模：{{= it.xmMain.zdmj}}亩</li>
+                    <li>新增建设用地计划：{{= it.xmMain.dum01}}亩</li>
+                    <li>当年新增建设用地计划：{{= it.xmMain.dum02}}亩</li>
+            </ul>
+        </div>
+         <div>
+            <div class="litter_tit" style="margin-top: 10px;">融资信息</div>    
+            <ul>
+                    <li>总需求：{{= it.xmMain.fom01}} 万元</li>
+                    <li>其中银行贷款：{{= it.xmMain.fom02}} 万元</li>
+                    <li>银行贷款截至{{= it.xmMain.jsnd-1}}年底已到位：{{= it.xmMain.fom03}} 万元</li>
+                    <li>{{= it.xmMain.jsnd}}年银行贷款缺口：{{= it.xmMain.fom04}} 万元</li>
+            </ul>
+        </div>
+        <div>
+             {{~it.ydList:value:index}}  
+            <div class="litter_tit" style="margin-top: 10px;">月度信息 {{= index+1}}</div>  
+            <ul>
+                    <li>{{=formatDate(value.tbyear,"MM")}}月度投资：{{= value.ydtz}}</li>
+                    <li>占年度投资：{{= value.zndtz}}%</li>
+                    <li>施工状态：{{= value.sgztName}}</li>
+            </ul>
+            <p>主要建设内容及形象进度：{{= value.jsnrjxxjd}}</p>
+            <p>项目存在问题：{{= value.dzwt}}</p>
+            <div class="swiper-container" id="swiper-container">
+                <div class="swiper-wrapper">
+                    {{~ value.ydJzPicList:val:inde}}
+                    <div class="swiper-slide">
+                        <div class="slide-img" style="width: ">
+                            <img src="{{= it.base_url}}{{= val.sctplj}}" alt="">
+                        </div>
+                    </div>
+                    {{~}}
+                </div>
+            </div>
+        </div> 
+        {{~}}
+    </script>
+    <script type="text/x-dot-template" id="ppptempList">
+        <!-- PPP模板 -->
+        <div class="center xmmc" style="padding-top: 15px;">{{= it.pppXmMain.xmmc}}</div>
+            <ul>
+                <li class="litter_tit">基本信息</li>
+                <li>入库类别：{{= it.pppXmMain.rklbName}}</li>
+                <li>项目性质：{{= it.pppXmMain.jsxzName}}</li>
+                <li>报送单位：{{= it.pppXmMain.zrdw.name}}</li>
+                <li>总投资：{{= it.pppXmMain.ztz}} 万元</li>
+                <li>计划开工时间：{{= it.pppXmMain.yjkgsj}}</li>
+                <li>联系人1：{{= it.pppXmMain.llyName}}</li>
+                <li>联系方式：{{= it.pppXmMain.llyPhone}}</li>
+                <li>联系人2：{{= it.pppXmMain.llyName1}}</li>
+                <li>联系方式：{{= it.pppXmMain.llyPhone}}</li>
+                <li>项目地点：{{= it.pppXmMain.jsdd}}</li>
+            </ul>
+            <p>建设内容及规模：{{= it.pppXmMain.jsnr}}</p>
+            <p>备注：{{= it.pppXmMain.remarks}}</p>
+            <ul>
+                {{~it.ydList:v1:index}}
+                <li class="litter_tit">周进展信息 {{=index+1}}</li>
+                <li>{{=formatDate(v1.tbyear,"MM")}}月 第{{=v1.jztype}}周</li>
+                {{? v1.ydtz}}
+                <li>本周投资额: {{= v1.ydtz}} 万元</li>
+                {{?}}
+                <li>是否入库: {{=v1.sfrkName}}</li>
+                <li>项目状态: {{=v1.sgztName}}</li>
+                <li>主要建设内容及进度: {{=v1.jsnrjxxjd}}</li>
+                <li>项目存在问题：{{=v1.dzwt}}</li>
+                <ul>
+                    <div class="swiper-container" id="swiper-container">
+                         <div class="swiper-wrapper">
+                            {{~v1.ydJzPicList:val:inde}}
+                            <div class="swiper-slide">
+                                    <div class="slide-img">
+                                        <img src="{{= it.base_url}}{{= val.sctplj}}" alt="">
+                                    </div>
+                            </div>
+                            {{~}}
+                        </div>
+                    </div>
+                </ul>
+                {{~}}
+            </ul>
+    </script>
+</body>
+</html>
+

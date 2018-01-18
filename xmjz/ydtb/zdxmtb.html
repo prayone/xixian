@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月度填报</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <link rel="stylesheet" href="../../hui/css/hui.css"/>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css?v=1e35cd1"/>
+    <script src="../../weui/jquery-2.1.4.js"></script>
+    <script src="../../hui/js/hui.js"></script>
+    <script src="../../weui/zepto.js"></script>
+    <script src="../../weui/fastclick.js"></script>
+    <script src="../../js/util.js"></script>
+    <script src="../../js/doT.js"></script>
+    <script>
+        var sessionid = localStorage.getItem("sessionid");
+        var id=getQueryString("id");
+        var tbsj=getQueryString("tbsj");
+        var tbsjNum=parseInt(tbsj)
+        var tbsjDate=formatDate(tbsjNum, 'yyyy-MM')
+        var njhtz;
+        var ljwctz;
+        var ztz;
+        var data={};
+        $(function() {
+            FastClick.attach(document.body);
+            if(tbsj){
+                data.xmid=id;
+                data.tempDate=tbsjDate;
+            }else{
+                data.id=id;
+            }
+                zhpost(ZDXMTB+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    // 获取计算投资信息
+                    njhtz=result.xmMain.njhtz;
+                    ljwctz=result.xmMain.ljwctz;
+                    ztz=result.xmMain.ztz;
+                    // 获取计算投资信息结束
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#tempList").text());
+                    $('#xm_list').html(temp_text(result));
+                    console.log(result)
+                });
+        });
+        function jsbfbzd() {
+            // njhtz    //获取年计划投资
+            // ljwctz //截止去年累计完成投资
+            // ztz  //总投资
+            var tze = $("#ydtz").val();     //获取填写的投资额
+            var z = Number(tze) + Number(ljwctz) ;
+            var c = parseFloat(tze).toFixed(2) * 100 / parseFloat(njhtz).toFixed(2);
+            if (tze != "") {
+                if(Number(njhtz)==0){
+                    $("#zndtz").val("0");
+                }else {
+                    $("#zndtz").val(c.toFixed(2));
+                }
+            } else {
+                $("#zndtz").val("0");
+            }
+        }
+    </script>
+    <style>
+       .wrap{
+            margin: 10px;
+            background-color: #fff;
+       }
+       .xmmc{
+            color: #046DAE;
+            font-size: 20px;
+            margin: 10px 0;
+       }
+        .center{
+            text-align: center; 
+        }
+        .ul li{
+            padding:5px;
+            border-bottom: 1px solid #8db4c0;
+            line-height: 31px;
+            color: #777;
+        }
+        .p {
+            padding:5px;
+            border-bottom: 1px solid #8db4c0;
+            line-height: 30px;
+            color: #777;
+        }
+        .bor{
+            color: #777;
+            margin-top: 3px;
+        }
+        .litter_tit{
+            color: #A73FC8;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        ul{
+            list-style: none;
+            padding: 0!important;
+        }
+        .litter_tit{
+            padding-left:8px;
+        }
+        .ul li input{
+        	height: 30px;
+        	border:1px solid #ccc;
+        	border-radius: 4px;
+        }
+        .ul li span{
+            display: inline-block;
+            width:100px;
+        }
+        textarea{
+        	border:1px solid #ccc;
+        	width: 98%;
+        	border-radius: 4px;
+        	height: 50px;
+            padding-left: 5px;
+        }
+        img {
+            width: 80%;
+            max-width: 220px;
+            padding: 4px;
+            border:1px solid #ccc;
+            margin:4px 0;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="wrap" id="xm_list">
+    </div>
+    <script type="text/x-dot-template" id="tempList">
+	    <div class="center xmmc" rklb="{{=it.xmMain.rklb}}" xmid="{{=it.ydMain.xmid}}" xgid="{{=it.ydMain.id}}" style="padding-top: 15px;">{{=it.xmMain.xmmc}}</div>
+	    <ul class="ul">
+	        <li>
+                <span>建设时间：</span>
+                <input class="item" type="text" name="tbyear" style="width:100px;text-align: center;background-color: #eee;" value="{{= formatDate(it.ydMain.tbyear,'yyyy-MM')}}" readonly="true">
+            </li>
+	        <li>
+                <span>1-12月投资额：</span>
+                {{? it.ydMain.ydtz}}
+                <input id="ydtz" class="item" style="width:100px;padding-left:6px; " type="text" name="ydtz" value="{{=it.ydMain.ydtz}}" onblur="jsbfbzd()"> 万元
+                {{??}}
+                <input id="ydtz" class="item" style="width:100px;padding-left:6px; " type="text" name="ydtz" value="" onblur="jsbfbzd()"> 万元
+                {{?}}
+            </li>
+	        <li>
+                <span>占年度投资：</span>
+                {{? it.ydMain.ydtz}}
+                <input id="zndtz" class="item" style="width:100px;padding-left:6px;" type="text" name="zndtz" readonly="true"  value="{{=it.ydMain.zndtz}}">  %
+                {{??}}
+                <input id="zndtz" class="item" style="width:100px;padding-left:6px;" type="text" name="zndtz" readonly="true"  value="">  %
+                {{?}}
+
+            </li>
+	        <li>
+                <span>是否竣工：</span>
+                {{? it.ydMain.sgzt==2}}
+                <input name="sgzt" class="sgzt" type="checkbox" style="position: relative;top:10px;margin-left: 10px;" checked="checked" value="2" />
+                {{??}}
+                <input name="sgzt" class="sgzt" type="checkbox" style="position: relative;top:10px;margin-left: 10px;"/>
+                {{?}}
+            </li>
+	    </ul>
+	    <p class="p">
+            <span>建设内容及形象进度：</span>
+            {{? it.ydMain.ydtz}}
+            <textarea placeholder="不少于2个字" class="item" name="jsnrjxxjd" value="">{{=it.ydMain.jsnrjxxjd}}</textarea>
+            {{??}}
+            <textarea placeholder="不少于2个字" class="item" name="jsnrjxxjd" value=""></textarea>
+            {{?}}
+
+        </p>
+	    <p class="p">
+            <span>项目存在问题：</span>
+            {{? it.ydMain.ydtz}}
+            <textarea placeholder="不少于5个字" class="item" name="dzwt">{{=it.ydMain.dzwt}}</textarea>
+            {{??}}
+            <textarea placeholder="不少于5个字" class="item" name="dzwt"></textarea>
+            {{?}}
+        </p>
+
+        {{~it.ydMain.ydJzPicList:value:index}}
+        <div class="z_addImg" style="width:45%;margin: 5px;display: inline-block;" data_href="{{=value.sctplj}}" onclick="imgDelect(this)">
+            <img src="{{=it.base_url}}{{=value.sctplj}}" alt="">
+        </div>
+        {{~}}
+
+	<script/>
+    <!-- 图片上传 -->
+    <div class="container">
+        <div class="row">
+            <div id="upload-container" class="col-xs-12 text-center upimg">
+                <input id="imgInput" accept="image/*" type="file" />
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <button class="btn btn-primary" style="margin:20px 0 10px 0;font-size: 18px;width: 200px;height: 50px;" onclick="submit()">提交</button>
+        </div>
+    </div>
+    <script src="../../dist/lrz.bundle.js?v=7687367"></script>
+    <script src="./zdindex.js?v=27ce5f7"></script>
+</body>
+</html>
+

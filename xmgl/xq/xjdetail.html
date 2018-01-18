@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目详情</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <link rel="stylesheet" href="../../hui/css/hui.css">
+    <link rel="stylesheet" href="../../weui/weui.css">
+    <script src="../../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../weui/jquery-weui.css">
+    <link rel="stylesheet" href="../../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../swiper/idangerous.swiper.js"></script>
+    <script src="../../weui/zepto.js"></script>
+    <script src="../../weui/fastclick.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../weui/jquery-weui.js"></script>
+    <script src="../../js/util.js"></script>
+    <script type="text/javascript" src="../../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../hui/js/hui-accordion.js"></script>
+    <script type="text/javascript" src="../../js/doT.js"></script>
+    <script>
+        var sessionid = localStorage.getItem("sessionid");
+        $(function() {
+            FastClick.attach(document.body);
+        });
+            var id=getQueryString("id");
+            var xmlb=getQueryString("xmlb");
+            var data={id:id};
+            if(xmlb=="jzkg"){
+                 zhget(JZKGDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#tempList").text())
+                    $('#xm_list').html(temp_text(result));
+                });
+            }else if(xmlb=="qq"){
+                 zhget(QQDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    var temp_text=doT.template($("#qqtempList").text())
+                    $('#xm_list').html(temp_text(result));
+                });
+            }else if(xmlb=="ppp"){
+                zhget(PPPDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    console.log(result)
+                    var temp_text=doT.template($("#ppptempList").text())
+                    $('#xm_list').html(temp_text(result));
+                });
+            }else{
+                zhget(XJDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    result.base_url=targetUrl;
+                    var temp_text=doT.template($("#tempList").text())
+                    $('#xm_list').html(temp_text(result));
+                });
+            }
+           
+           /*时间格式转换*/
+    function formatDate(date, format) {
+        if (!date) return;
+        if (!format) format = "yyyy-MM-dd";
+        switch (typeof date) {
+            case "string":
+                date = new Date(date.replace(/-/, "/"));
+                break;
+            case "number":
+                date = new Date(date);
+                break;
+        }
+        if (!date instanceof Date) return;
+        var dict = {
+            "yyyy": date.getFullYear(),
+            "M": date.getMonth() + 1,
+            "d": date.getDate(),
+            "H": date.getHours(),
+            "m": date.getMinutes(),
+            "s": date.getSeconds(),
+            "MM": ("" + (date.getMonth() + 101)).substr(1),
+            "dd": ("" + (date.getDate() + 100)).substr(1),
+            "HH": ("" + (date.getHours() + 100)).substr(1),
+            "mm": ("" + (date.getMinutes() + 100)).substr(1),
+            "ss": ("" + (date.getSeconds() + 100)).substr(1)
+        };
+        return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
+            return dict[arguments[0]];
+        });
+    }
+    console.log(formatDate(1509465600000,"yyyy-MM-dd"));
+
+    </script>
+    <style>
+       body{
+            background-color: #F1F1F1;
+       }
+       .wrap{
+            margin: 10px;
+            background-color: #fff;
+       }
+       .xmmc{
+            color: #046DAE;
+            font-size: 20px;
+            margin: 20px 0;
+       }
+        .center{
+            text-align: center; 
+        }
+        li{
+            padding:5px;
+            border-bottom: 1px solid #eee;
+            /*height: 31px;*/
+            line-height: 31px;
+            color: #777;
+        }
+        p {
+            padding:5px;
+            border-bottom: 1px solid #eee;
+            line-height: 30px;
+            color: #777;
+        }
+        .bor{
+            color: #777;
+            margin-top: 3px;
+        }
+        .litter_tit{
+            color: #A73FC8;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        div{
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="wrap" id="xm_list">
+       
+    </div>
+    <!-- 续建、新开工、集中开工 -->
+    <script type="text/x-dot-template" id="tempList">
+        <div class="center xmmc">{{= it.xmmc}}</div>
+        <ul>
+            <li class="litter_tit">基础信息</li>
+            <li>行业类别：{{= it.xmlb.name}}</li>
+            <li>建设起止年限：{{= it.jsnxq}} - {{= it.jsnxz}}</li>
+            <li>投资主体：{{= it.tzzt}}</li>
+            <li>总投资：{{= it.ztz}} 万元</li>
+            <li>责任单位：{{= it.zrdw.name}}</li>
+            <li>年度投资：{{= it.njhtz}} 万元</li>
+            <li>建设地点：{{= it.jsdd}}</li>
+            <li>投资来源：{{= it.tzlyName}}</li>
+            <li>是否产业类项目：{{= it.sfcylxmName}}</li>
+            {{? it.rklb==01 }}
+            <li>截止{{= it.jsnd-1}}年底完成投资：{{= it.ljwctz}} 万元</li>
+            {{?}}
+            <li>预计开工时间：{{= it.yjkgsj}}</li>
+            <li>建成时间：{{= it.jcsj}}</li>
+        </ul>
+        <p>建设内容及规模：{{= it.jsnr}}</p>
+        <p>主要形象进度：{{= it.jsnrNd}}</p>
+        <ul>
+            <li class="litter_tit">联系方式</li>
+            <li>联系人：{{= it.llyName}}</li>
+            <li>职务：{{= it.llyJob}} </li>
+            <li>联系方式1：{{= it.llyPhone1}}</li>
+            <li>联系方式2：{{= it.llyPhone2}}</li>
+        </ul>
+        <ul>
+            <li class="litter_tit">用地信息</li>
+            <li>用地总规模：{{= it.zdmj}}亩</li>
+            <li>新增建设用地计划：{{= it.dum01}}亩 </li>
+            <li>当年新增建设用地计划：{{= it.dum02}}亩</li>
+        </ul>
+        <ul>
+            <li class="litter_tit">融资信息</li>
+            <li>总需求：{{= it.fom01}} 万元</li>
+            <li>其中银行贷款：{{= it.fom02}} 万元 </li>
+            <li>银行贷款截至2016年底已到位：{{= it.fom03}} 万元</li>
+            <li>2017年银行贷款缺口：{{= it.fom04}} 万元</li>
+        </ul>
+        <div>
+                <div class="litter_tit" style="margin-top: 10px;">立项及文号</div>
+                <p>
+                    <div class="bor">立项文号：{{= it.xmPwjwhList[0].wh}}</div>
+
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[0].fpath}}" style="color: red;">{{= it.xmPwjwhList[0].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">环评文号：{{= it.xmPwjwhList[1].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[1].fpath}}" style="color: red;">{{= it.xmPwjwhList[1].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">用地预审(土地使用证)文号：{{= it.xmPwjwhList[2].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[2].fpath}}" style="color: red;">{{= it.xmPwjwhList[2].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">能评文号：{{= it.xmPwjwhList[3].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[3].fpath}}" style="color: red;">{{= it.xmPwjwhList[3].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">工程规划许可证文号：{{= it.xmPwjwhList[4].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[4].fpath}}" style="color: red;">{{= it.xmPwjwhList[4].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">施工许可证文号：{{= it.xmPwjwhList[5].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[5].fpath}}" style="color: red;">{{= it.xmPwjwhList[5].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">用地规划许可证文号：{{= it.xmPwjwhList[6].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[6].fpath}}" style="color: red;">{{= it.xmPwjwhList[6].fname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">稳评手续办理：{{= it.xmPwjwhList[7].wh}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[7].fpath}}" style="color: red;">{{= it.xmPwjwhList[7].fname}}</a></div>
+                </p>
+                
+        </div>
+        <ul>
+            <li class="litter_tit">项目属性信息</li>
+            <li>重点级别：{{= it.zdjbName}}</li>
+        </ul>
+    </script>
+    <!-- 前期项目 -->
+    <script type="text/x-dot-template" id="qqtempList">
+        <div class="center xmmc">{{= it.xmmc}}</div>
+            <ul>
+                <li>建设性质：{{= it.jsxzName}}</li>
+                <li>是否产业类项目：{{= it.sfcylxmName}}</li>
+                <li>行业类别：{{= it.xmlb.name}}</li>
+                <li>责任单位：{{= it.zrdw.name}}</li>
+                <li>建设地点：{{= it.jsdd}}</li>
+                <li>项目负责单位：{{= it.tzzt}}</li>
+                <li>投资来源：{{= it.tzlyName}}</li>
+                <li>总投资：{{= it.ztz}} 万元</li>
+            </ul>
+            <p>建设内容及规模：{{= it.jsnr}}</p>
+            <p>主要工作进展情况：{{= it.zygz}}</p>
+            <p>2017年工作目标：{{= it.jsnrNd}}</p>
+    </script>
+    <!-- ppp项目 -->
+    <script type="text/x-dot-template" id="ppptempList">
+        <div class="center xmmc" >{{= it.xmmc}}</div>
+        <ul>
+            <li class="litter_tit">基础信息</li>
+            <li>入库类别：{{= it.rklbName}}</li>
+            <li>项目性质：{{= it.jsxzName}}</li>
+            <li>总投资：{{= it.ztz}} 万元</li>
+            <li>报送单位：{{= it.zrdw.name}}</li>
+            <li>计划开工时间：{{= it.yjkgsj}}</li>
+            <li>联系人1：{{= it.llyName}}</li>
+            <li>联系方式1：{{= it.llyPhone}}</li>
+            <li>联系人2：{{= it.llyName1}}</li>
+            <li>联系方式2：{{= it.llyPhone1}}</li>
+            <li>项目地点：{{= it.jsdd}}</li>
+        </ul>
+        <p>建设内容及规模：{{= it.jsnr}}</p>
+        <p>备注：{{= it.remarks}}</p>
+        <ul>
+            <li class="litter_tit">项目识别</li>
+            <li>
+                <span style="color: #777;">会同意采用PPP模式的文件：{{= it.zfppwj}}</span>
+                <div style="color: #777;">文件：<a href="{{= it.base_url}}{{= it.zfppwjpath}}" style="color: red;">{{= it.zfppwjname}}</a></div>
+            </li>
+            <li>实施机构：{{= it.ssjg}}</li>
+            <li>项目类别：{{= it.xmlbName}}</li>
+            <li>PPP操作模式：{{= it.pppmsName}}</li>
+            <li>已落实政策性资金：{{= it.ylszj}}</li>
+        </ul>
+        <div>
+                <div class="litter_tit" style="margin-top: 10px;">项目许可</div>
+                <p>
+                    <div class="bor">是否立项：{{= it.sfkybgName}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.sfkybgfpath}}" style="color: red;">{{= it.sfkybgname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">是否取得环境评价批复：{{= it.sfqdhjpfName}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.sfqdhjpffpath}}" style="color: red;">{{= it.sfqdhjpfname}}</a></div>
+                </p>
+                <p>
+                    <div class="bor">是否取得用地预审批复：{{= it.sfqdydpfName}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.sfqdydpffpath}}" style="color: red;">{{= it.sfqdydpfname}}</a></div>
+
+                </p>
+                <p>
+                    <div class="bor">是否取得规划选址：{{= it.sfqdghdzName}}</div>
+
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.sfqdghdzfpath}}" style="color: red;">{{= it.sfqdghdzname}}</a></div>
+
+                </p>
+                <p>
+                    <div class="bor">是否取得施工许可证：{{= it.kybgpfName}}</div>
+                    
+                    <div class="bor">附件：<a href="{{= it.base_url}}{{= it.kybgpffpath}}" style="color: red;">{{= it.kybgpfname}}</a></div>
+
+                </p>
+        </div>
+        {{? it.rklb==2||it.rklb==3}}
+        <ul>
+            <li class="litter_tit">项目准备</li>
+            <li>实施方案编制机构：{{= it.ssfabzjg}}</li>
+            <li>项目公司版权结构：{{= it.xmgsbqjg}}</li>
+            <li>政府方出资代表：{{= it.zffczdb}}</li>
+            <li>合作期限：{{= it.zhqx}}</li>
+            <li>回报机制：{{= it.hbjz}}</li>
+            <li>采购方式：{{= it.cgfs}}</li>
+            <li>方案是否获得政府批复：{{= it.fasfzfpfName}}</li>
+            <li>是否编制PPP实施方案：{{= it.sfbzpppfaName}}</li>
+            {{? it.rklb==3}}
+            <li>财务内部收益率：{{= it.cwnbsyl}}</li>
+            <li>贷款总规模：{{= it.dkzgm}}</li>
+            <li>资本金：{{= it.zbj}}</li>
+            {{?}}
+            <li>
+                是否取得两评报告：{{= it.sflpbgName}}
+                <div class="bor">附件：<a href="{{= it.base_url}}{{= it.sflpbgfpath}}" style="color: red;">{{= it.sflpbgname}}</a></div>
+            </li>
+            
+        </ul>
+        {{?}}
+
+        {{? it.rklb==3}}
+        <ul>
+            <li class="litter_tit">项目采购</li>
+            <li>通过资格预审单位数量：{{= it.tgshdwsl}}个</li>
+            <li>提交响应文件单位数量：{{= it.tjdwsl}}个</li>
+            <li>引入社会资金量：{{= it.yrshzjl}}</li>
+        </ul>
+         <ul>
+            <li class="litter_tit">项目执行</li>
+            <li>项目公司名称：{{= it.xmgsmc}}个</li>
+            <li>项目公司股权结构：{{= it.xmgsgqjg}}个</li>
+            <li>合作期限：{{= it.xmhzqx}}年</li>
+            <li>项目公司成立时间：{{= it.xmgsclsj}}</li>
+            <li>开工时间：{{= it.xmkgsj}}</li>
+            <li>预计工期：{{= it.xmyqgq}}月</li>
+        </ul>
+        <ul>
+            <li class="litter_tit">项目移交</li>
+            <li>项目移交时间：{{= it.xmyjsj}}</li>
+        </ul>
+        {{?}}
+    </script>
+</body>
+</html>
+

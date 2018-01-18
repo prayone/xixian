@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>月度按单位汇总</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    
+    <link rel="stylesheet" href="../date-picker/styles.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/doT.js"></script>
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../date-picker/moment.js"></script>
+    <script src="../date-picker/bootstrap-datetimepicker.js"></script>
+</head>
+<style>
+	body{
+		color:14px;
+		position: relative;
+	}
+	thead{
+		background-color: #F5FBFF;
+	}
+	.search{
+        position: fixed;
+        text-align: center;
+        left: 0;
+        right: 0;
+        z-index: 999;
+            }
+	.warp{
+		position: relative;	
+	}
+	.well{
+		margin-bottom: 0;
+	}
+	.well ul li{
+		text-align: left;
+		padding-left: 10px;
+	}
+</style>
+<body>
+	<div class="warp">
+		<div class="search" style="">
+	        <div class="collapse coll" id="collapseExample">
+	              <div class="well">
+	                <!-- 查询列表 -->
+	                <ul class="nav navbar-nav navbar-right">
+	                     <li class="" style="">
+                                <font style="color: #888">年月:</font>
+                                <div class="iDate date" style="margin-left: 37px">
+                                    <input type="text" id="formTbyear" style="" >
+                                    <button type="button" class="addOn"></button>
+                                </div>
+                                <button type="button" id="cx" onclick="sousuo();" class="btn btn-primary btn-sm" style="position: relative;top: -2px;left:28px;display: inline-block;">
+                                    查询
+                                </button>
+                            </li>
+
+                            <li class="" style="margin-top:16px">
+                                <font style="color: #888">责任单位：</font>
+                                <select style="height: 30px;width:60%;border-color:#eeeeee" id="zrdw" class="sele">
+                                         
+                                </select>  
+                            </li>
+                            
+                           <li class="" style="margin-top:16px">
+                                <font style="color: #888">总投资：</font>
+                                <input type="text" class="mui-input-clear" style="height: 30px;width:66px;margin-left: 18px" id="ztz1" style="float:left;">
+                                <span>—</span>
+                                <input type="text" class="mui-input-clear" style="height: 30px;width:66px;" id="ztz2" style="">&nbsp;&nbsp;<span style="color:#666;">万元</span>
+                            </li>
+	                </ul>
+	              </div>
+	        </div>
+	        <a class="search_img" role="button" data-toggle="collapse" href="#collapseExample" >
+	            <img src="../../img/bottom.png" id="search_img" alt="">
+	        </a>
+	        <!-- collapse结束 -->
+	    </div>
+    </div>
+	<table id="contentTable" class="table table-striped table-bordered table-condensed" style="min-width: 1550px;position: relative;top: 30px;">
+            <colgroup width="135px;"></colgroup>
+            <colgroup width="55px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="75px;"></colgroup>
+            <colgroup width="45px;"></colgroup>
+            <colgroup width="65px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="75px;"></colgroup>
+            <colgroup width="55px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="75px;"></colgroup>
+            <colgroup width="45px;"></colgroup>
+            <colgroup width="60px;"></colgroup>
+            <colgroup width="75px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="85px;"></colgroup>
+            <colgroup width="75px;"></colgroup>
+            <thead>
+            <tr id="xm_list1">
+                
+            </tr>
+            <tr>
+                <th>个数</th>
+                <th>总投资(万元)</th>
+                <th>年度投资(万元)</th>
+                <th class="ytz">1-当前月投资(万元)</th>
+                <th>占比(%)</th>
+                <th>排名</th>
+
+                <th>社会资本(万元)</th>
+                <th>占比(%)</th>
+                <th>产业项目</th>
+                <th>占比(%)</th>
+
+                <th>个数</th>
+                <th>年度投资(万元)</th>
+                <th class="ytz">1-当前月投资(万元)</th>
+                <th>占比(%)</th>
+
+                <th>个数</th>
+                <th>开工个数</th>
+                <th>开工率</th>
+                <th>年度投资</th>
+                <th class="ytz">1-当前月投资(万元)</th>
+                <th>占比(%)</th>
+            </tr>
+            </thead>
+            <tbody id="xm_list">
+                
+            </tbody>
+    </table>
+    <script type="text/x-dot-template" id="tempList1">
+        <th rowspan="2"> 行业名称</th>
+        <th colspan="6" style="text-align: center;">{{= formatDate(it.xmTjbb.formTbyear,'yyyy')}}年任务</th>
+        <th colspan="4" style="text-align: center;">投资类型</th>
+        <th colspan="4" style="text-align: center;">续建</th>
+        <th colspan="6" style="text-align: center;">新开工</th>
+    </script>
+    <script type="text/x-dot-template" id="tempList">
+        {{~it.page:value:index}}
+            <tr>
+            	<!-- 单位名称 -->
+            	{{? value.name}}
+                <td style="text-align: left;">
+                        {{= value.name}}
+                </td>
+                {{??}}
+                 <td style="text-align: left;">
+                        合计：
+                </td>
+	            {{?}}
+				<!-- 个数 -->
+                <td>{{=value.hnum}}</td>
+                <!-- 总投资 -->
+                <td style="text-align: right;">
+                            {{=value.hztz}} 
+                </td>
+                <!-- 年度投资 -->
+                <td style="text-align: right;">
+                            {{=value.hnjhtz}} 
+                </td>
+                <!-- 1~12月投资 -->
+                {{? value.hydtz}}
+                <td style="text-align: right;">
+                            {{=value.hydtz}} 
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                           0.00
+                </td>
+                {{?}}
+                <!-- 占比 -->
+                 {{? value.zndtz}}
+                <td style="text-align: right;">
+                   			 {{=value.zndtz}}
+                </td>
+                 {{??}}
+                <td style="text-align: right;">
+                           0.00
+                </td>
+                {{?}}
+                <!-- 排名 -->
+                <td>{{=value.rownum}}</td>
+
+                <!-- 投资类型 -->
+                <!-- 社会资本 -->
+                <td style="text-align: right;">
+                   			 {{=value.shtz}}
+                </td>
+                <!-- 占比 -->
+                {{?value.shzb}}
+                <td style="text-align: right;">
+                   			 {{=value.shzb}}
+                </td>
+                 {{??}}
+                <td style="text-align: right;">
+                           0.00
+                </td>
+                {{?}}
+                <!-- 产业项目 -->
+                <td style="text-align: right;">
+                             {{=value.cytz}}
+                </td>
+                <!-- 占比 -->
+                {{?value.cyzb}}
+                <td style="text-align: right;">
+                     {{=value.cyzb}}
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                     0.00
+                </td>
+                {{?}}
+                <!--个数-->
+                <td> {{=value.xnum}}</td>
+                <!-- 年度投资 -->
+                <td style="text-align: right;">
+                            {{=value.xnjhtz}} 
+                </td>
+                <!-- 1~12月投资 -->
+                {{? value.xydtz}}
+                <td style="text-align: right;">
+                             {{=value.xydtz}} 
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                            0.00 
+                </td>
+                {{?}}
+                <!-- 占比 -->
+                {{?value.xzndtz}}
+                <td style="text-align: right;">
+                     {{=value.xzndtz}}
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                     0.00
+                </td>
+                {{?}}
+                <!-- 个数 -->
+                <td> {{=value.xknum}}</td>
+                <!-- 开工个数 -->
+                <td> {{=value.xksnum}}</td>
+                <!-- 开工率 -->
+                <td> {{=value.xklu}}</td>
+                <!-- 年度投资 -->
+                <td style="text-align: right;">
+                             {{=value.xknjhtz}} 
+                </td>
+                <!-- 1-12月投资 -->
+                {{? value.xkydtz}}
+                <td style="text-align: right;">
+                             {{=value.xkydtz}} 
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                             0.00
+                </td>
+                {{?}}
+                <!-- 占比 -->
+                {{?value.xkzndtz}}
+                <td style="text-align: right;">
+                     {{=value.xkzndtz}}
+                </td>
+                {{??}}
+                <td style="text-align: right;">
+                     0.00
+                </td>
+                {{?}}
+            </tr>
+            {{~}}
+    </script>
+    <script type="text/x-dot-template" id="zrdwList">
+        <option value="" selected="selected">请选择</option>  
+        {{~it.zrdwList:value:index}}
+        <option value="{{=value.id}}">{{= value.name}}</option> 
+        {{~}}
+    </script>
+</body>
+<script>
+	// 时间选择器的初始化
+	$(document).ready(function() {
+                // date time picker
+                if ($(".iDate.full").length > 0) {
+                    $(".iDate.full").datetimepicker({
+                        locale : "zh-cn",
+                        format : "YYYY-MM",
+                        dayViewHeaderFormat : "YYYY年 MMMM"
+                    });
+                }
+                if ($(".iDate.date").length > 0) {
+                    $(".iDate.date").datetimepicker({
+                        locale : "zh-cn",
+                        format : "YYYY-MM",
+                        dayViewHeaderFormat : "YYYY年 MMMM"
+                    });
+                }
+            })
+    // ----------------------------------------------------------------------------------------------------
+    $(function(){
+        FastClick.attach(document.body);
+            xmList()
+            $('#collapseExample').on('show.bs.collapse', function () {
+                     $("#search_img").attr("src","../img/top.png")
+                })
+                 $('#collapseExample').on('hide.bs.collapse', function () {
+                     $("#search_img").attr("src","../img/bottom.png")
+                    })
+        })
+    // ----------------------------------------------------------------------------------------------------
+        var sessionid = localStorage.getItem("sessionid");
+        var tbnd = localStorage.getItem("tbnd");
+        var data={};
+        var date=new Date;
+        var curMonth=date.getMonth()+1;
+         function xmList() {
+            zhpost(DWHZ+";JSESSIONID=" + sessionid, data).then( function(result) {
+                console.log(result)
+                var temp_text=doT.template($("#tempList").text())
+                $('#xm_list').html(temp_text(result));
+
+                var time=doT.template($("#tempList1").text())
+                $('#xm_list1').html(time(result));
+                // 责任单位的列表获取
+                $('#zrdw').html(doT.compile($("#zrdwList").html())(result));
+
+
+                $(".ytz").text("1-"+curMonth+"月投资(万元)")
+            });
+        }
+
+         function sousuo() {
+                    $('#collapseExample').collapse('hide');
+                    var formTbyear=$('#formTbyear').val();
+                    var zrdw=$('#zrdw').val();
+                    var ztz1=$('#ztz1').val();
+                    var ztz2=$('#ztz2').val();
+                    
+                   
+                    var data={
+                            
+                            formZtzq:ztz1,
+                            formZtzh:ztz2,
+                            formZrdw:zrdw,
+                            formTbyear:formTbyear
+                            
+                            };
+                        zhpost(DWHZ+";JSESSIONID=" + sessionid, data).then( function(result) {
+                        var temp_text=doT.template($("#tempList").text())
+                        $('#xm_list').html(temp_text(result));
+                       
+                         
+                    });
+                }
+        </script>
+ 
+</html>

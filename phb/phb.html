@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月度排行榜</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <link rel="stylesheet" href="../weui/weui.css">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../weui/jquery-weui.css">
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+    <script type="text/javascript" src="../js/doT.js"></script>
+    <script>
+        var sessionid = localStorage.getItem("sessionid");
+        $(function() {
+            FastClick.attach(document.body);
+            xmList();
+        });
+        var data={};
+        function xmList() {
+            zhget(PHB+";JSESSIONID=" + sessionid, data).then( function(result) {
+                result.aa=targetUrl;
+                var temp_text=doT.template($("#tempList").text())
+                $('#xm_list').html(temp_text(result));
+            });
+        }
+        
+    </script>
+    <style>
+       body{
+        background-color: #F1F1F1;
+       }
+       .hui-media-content{
+        float: left;
+       }
+       .li_list{
+            border-bottom: 1px solid #3EAFE0;
+            padding: 20px 0 20px 16px!important;
+        }
+        h3{
+            color: #333!important;
+            margin: 0  0 8px 0!important;
+        }
+        h5{
+            color: #666!important;
+        }
+        .hui-media-content {
+            width:100%!important;
+        }
+        .tr{
+            margin:10px 0; 
+            height:55px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="wrap">
+       <div id="left" style="width: 260px; margin:0 auto;" class="">
+            <div style="width:260px;height:55px;margin-top:20px;">
+                <img alt="" src="../img/yd.png">
+            </div>
+            <div style="height:100%;margin:20px auto;">
+                <table id="xm_list">
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/x-dot-template" id="tempList">
+       {{~ it.topList:f:index}}
+        <tbody>
+        <tr class="tr">
+            {{? index<3}}
+            <td style="text-align: center;vertical-align: middle;width: 30px;">
+                <img alt="" src="../img/a{{=index+1}}.png" style="width:30px;height:30px;">
+            </td>
+            {{??}}
+            <td style="text-align: center;vertical-align: middle;width: 30px;">
+                <div style="width: 18px;height:18px;line-height:18px;border: 1px solid #D2D2D2;background-color: #D2D2D2;margin-left:5px;text-align: center;vertical-align: middle;">
+                                    {{=index+1}}
+                </div>
+            </td>
+            {{?}}
+            <td style="text-align: center;vertical-align: middle;width: 50px;">
+                <img alt="" src="{{?f.photo}}{{=it.aa}}{{=f.photo}}{{??}}../img/user.jpg{{?}}" style="width:40px;height:40px;">
+            </td>
+            <td style="vertical-align: middle;">
+                <div style="margin-left: 5px;">
+                    <div style="margin-top: -2px;font-size: 12px;">
+                    {{=f.officeId.name}}
+                        <div style="margin-top: 4px;">
+                            <span style="color:#666666;font-size: 12px;">分数：</span>
+                            {{? f.score}}
+                            <span style="color: #FF9E00;font-weight: bold;"> 
+                                {{=f.score}}分
+                            </span>
+                            {{?? !f.score}}
+                            <span style="color: #FF9E00;font-weight: bold;"> 
+                                0.0分
+                            </span>
+                            {{?}}
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        {{~}}
+    </script>
+</body>
+</html>
+

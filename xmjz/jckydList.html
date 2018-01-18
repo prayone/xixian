@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>基础库月度进展</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+           ">
+        <link rel="stylesheet" href="../date-picker/styles.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <script type="text/javascript" src="../js/doT.js"></script>
+        <script src="../weui/jquery-2.1.4.js"></script>
+        <script src="../js/util.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/mui.min.css">
+        <script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../weui/fastclick.js"></script>
+        <script src="../weui/jquery-weui.js"></script>
+        <script src="../weui/zepto.js"></script>
+        <script src="../date-picker/moment.js"></script>
+        <script src="../date-picker/bootstrap-datetimepicker.js"></script>
+        <style type="text/css">
+            .mui-content>.mui-table-view:first-child {
+                margin-top: -1px;
+            }
+            .li_list{
+            border-bottom: 1px solid #3EAFE0!important;
+            padding: 10px 0 10px 20px!important;
+            }
+            .search{
+                position: absolute;
+                z-index:4;
+                text-align: center;
+                left: 0;
+                right: 0;
+            }
+            .ztz{
+                margin: 8px 0;
+            }
+            .xm_sec{
+                margin-top: 30px;
+            }
+            .well{
+                margin-bottom: 0;
+                padding:10px;
+            }
+            .nav li{
+                text-align: left;
+                font-size: 14px;
+                padding-left: 20px;
+            }
+            select{
+                padding:0 2px;
+                border:1px solid #ccc!important;
+            }
+            #jsnd{
+                height:30px;
+                border:none;
+                padding-bottom: 1px;
+            }
+            .iDate.date {
+                width: 130px;
+            }
+        </style>
+    </head>
+    <body ontouchstart>
+        <!-- 搜索部分 -->
+        <div class="warp" style="position: relative;">
+            <div class="search" style="">
+                <div class="collapse" id="collapseExample">
+                      <div class="well">
+                        <!-- 查询列表 -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="" style="">
+                                <font style="color: #888">年月:</font>
+                                <div class="iDate date" style="margin-left: 37px">
+                                    <input type="text" id="jsnd" style="" >
+                                    <button type="button" class="addOn"></button>
+                                </div>
+                                <button type="button" id="cx" onclick="sousuo();" class="btn btn-primary btn-sm" style="position: relative;top: -2px;left:28px;display: inline-block;">
+                                    查询
+                                </button>
+                            </li>
+                            <li class="" style="margin-top: 10px">
+                                <font style="color: #888;display: inline-block;">项目名称：</font>
+                                <input type="text" class="mui-input-clear" id="xmmc" style="width:60%;height: 30px;display: inline-block;">
+                            </li>
+                            <li class="" style="">
+                                <font style="color: #888">责任单位：</font>
+                                <select style="height: 30px;width:60%;border-color:#eeeeee" id="zrdw" class="sele">
+                                         
+                                </select>  
+                            </li>
+                            
+                        </ul>
+                      </div>
+                </div>
+                <a class="search_img" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <img src="../img/bottom.png" id="search_img" alt="">
+                </a>
+                <!-- collapse -->
+            </div>
+        </div>
+        <!-- 列表部分 -->
+        <div id="pullrefresh" class="mui-content mui-scroll-wrapper xm_sec">
+            <div class="mui-scroll">
+                <!--数据列表-->
+                <ul class="mui-table-view mui-table-view-chevron" id="xm_list">
+                   
+                </ul>
+            </div>
+        </div>
+        <script type="text/x-dot-template" id="tempList">
+            {{~it.page.list:value:index}}
+            <li class="li_list"  id="li_list">
+                <a class="listItem" tid="{{=value.id}}" href="javascript:0">
+                    <div class="hui-media-content">
+                        <h4>{{= value.xmmc}}</h4>
+                        <h5 class="ztz">总投资：{{=value.ztz}} 万元</h5>
+                        <h5>责任单位：{{=value.zrdwN}}</h5>
+                       
+                    </div>
+                </a>
+                <h5 style="text-align: right;margin:0;padding:0 10px 0 0;">
+                    {{? value.pppYdMainList.length>0}}
+                    <a class="ydtb" tid="{{= value.pppYdMainList[0].id}}" tbsj="" href="javascript:0;">
+                        <button class="ydbtn" style="color:#337AB7" type="button">修改</button>
+                    </a>
+                    {{??}}
+                     <a class="ydtb" tid="{{= value.id}}" tbsj="{{=it.pppYdMain.tbyear}}" href="javascript:0;">
+                        <button class="ydbtn" style="color:#337AB7" type="button">填报</button>
+                    </a>
+                    {{?}}
+                </h5>
+            </li>
+            {{~}}
+        </script>
+        <script type="text/x-dot-template" id="zrdwList">
+            <option value="" selected="selected">请选择</option>  
+            {{~it.zrdwList:value:index}}
+            <option value="{{=value.id}}">{{= value.name}}</option>  
+            {{~}}
+        </script>
+
+       
+    </body>
+    <script>
+            $(document).ready(function() {
+                // date time picker
+                if ($(".iDate.full").length > 0) {
+                    $(".iDate.full").datetimepicker({
+                        locale : "zh-cn",
+                        format : "YYYY-MM-DD",
+                        dayViewHeaderFormat : "YYYY年 MMMM DD"
+                    });
+                }
+                if ($(".iDate.date").length > 0) {
+                    $(".iDate.date").datetimepicker({
+                        locale : "zh-cn",
+                        format : "YYYY-MM-DD",
+                        dayViewHeaderFormat : "YYYY年 MMMM DD"
+                    });
+                }
+            })
+            $(function(){
+                FastClick.attach(document.body);
+                    xmList()
+                    $('#collapseExample').on('show.bs.collapse', function () {
+                             $("#search_img").attr("src","../img/top.png")
+                        })
+                         $('#collapseExample').on('hide.bs.collapse', function () {
+                             $("#search_img").attr("src","../img/bottom.png")
+                            })
+                    mui('body').on('tap', 'a.listItem', function () { 
+                        var id=$(this).attr("tid")
+                        document.location.href ="./xq/yddetail.html?id="+id+"&xmlb=ppp" });
+                    mui('body').on('tap', 'a.ydtb', function () { 
+                        var id=$(this).attr("tid")
+                        var tbsj=$(this).attr("tbsj")
+                        if(!tbsj){
+                            document.location.href ="./ydtb/ppptb.html?id="+id;
+                        }else{
+                            document.location.href ="./ydtb/ppptb.html?id="+id+"&tbsj="+tbsj;
+                        }
+                     });
+                })
+                var sessionid = localStorage.getItem("sessionid");
+                var tbnd = localStorage.getItem("tbnd");
+                 var data={
+                    pageNo:1,
+                    pageSize:10
+                 }
+                 function xmList() {
+                    zhpost(JCKYDLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                        console.log(result)
+                        var temp_text=doT.template($("#tempList").text())
+                        $('#xm_list').html(temp_text(result));
+                        // 责任单位的列表获取
+                        $('#zrdw').html(doT.compile($("#zrdwList").html())(result));
+                        // 初始化上拉加载
+                        var sum=(Math.ceil((result.page.count)/10));
+                        mui('#pullrefresh').pullRefresh().refresh(true);
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(sum<=1); 
+                    });
+                }
+
+              
+                 function sousuo() {
+                    pageNo=2;
+                    $('#collapseExample').collapse('hide');
+                    var jsnd=$('#jsnd').val();
+                    var xmmc=$('#xmmc').val();
+                    var zrdw=$('#zrdw').val();
+                    var data={
+                            pageNo:1,
+                            pageSize:10,
+                            tbyear:jsnd,
+                            "zrdw.id":zrdw,
+                            xmmc:xmmc
+                           
+                            };
+                        zhpost(JCKYDLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                        var temp_text=doT.template($("#tempList").text())
+                        $('#xm_list').html(temp_text(result));
+                        var sum=(Math.ceil((result.page.count)/10));
+                        mui('#pullrefresh').pullRefresh().refresh(true);
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(sum<=1); //参数为true代表没有更多数据了。
+                         
+                    });
+                }
+                // 初始化上拉加载
+                mui.init({
+                    pullRefresh: {
+                        container: '#pullrefresh',
+                        up: {
+                            contentrefresh: '正在加载...',
+                            callback: pullupRefresh
+                        }
+                    }
+                });
+            
+            /**
+             * 上拉加载具体业务实现
+             */
+            var pageNo=2;
+            function pullupRefresh() {  
+                    var jsnd=$('#jsnd').val();
+                    var xmmc=$('#xmmc').val();
+                    var zrdw=$('#zrdw').val();
+                    var data={
+                            pageNo:pageNo,
+                            pageSize:10,
+                            tbyear:jsnd,
+                            xmmc:xmmc,
+                            "zrdw.id":zrdw
+                            };
+
+                        zhpost(JCKYDLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                         $('#xm_list').append(doT.compile($("#tempList").html())(result));
+                        var sum=(Math.ceil((result.page.count)/10));
+                            mui('#pullrefresh').pullRefresh().endPullupToRefresh((pageNo>=sum)); //参数为true代表没有更多数据了。
+                            pageNo++;
+                    });
+            }
+
+        </script>
+</html>

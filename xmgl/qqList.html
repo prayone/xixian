@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>前期项目列表</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+           ">
+        <link rel="stylesheet" href="../css/demo.css" type="text/css">
+        <link rel="stylesheet" href="../date-picker/styles.css">
+        <link rel="stylesheet" href="../css/zTreeStyle.css" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <script type="text/javascript" src="../js/doT.js"></script>
+        <script src="../weui/jquery-2.1.4.js"></script>
+        <script src="../js/util.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/mui.min.css">
+        <script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../weui/fastclick.js"></script>
+        <script src="../weui/jquery-weui.js"></script>
+        <script src="../weui/zepto.js"></script>
+        <script type="text/javascript" src="../js/jquery.ztree.core.js"></script>
+        <script src="../date-picker/moment.js"></script>
+        <script src="../date-picker/bootstrap-datetimepicker.js"></script>
+        <style type="text/css">
+            .mui-content>.mui-table-view:first-child {
+                margin-top: -1px;
+            }
+            .li_list{
+            border-bottom: 1px solid #3EAFE0!important;
+            padding: 10px 0 10px 20px!important;
+            }
+            .search{
+                position: absolute;
+                z-index:999;
+                text-align: center;
+                left: 0;
+                right: 0;
+            }
+            .ztz{
+                margin: 8px 0;
+            }
+            .xm_sec{
+                margin-top: 30px;
+            }
+            .well{
+                margin-bottom: 0;
+                padding:10px;
+            }
+            .nav li{
+                text-align: left;
+                font-size: 14px;
+                padding-left: 20px;
+            }
+            select{
+                padding:0 2px;
+                border:1px solid #ccc!important;
+            }
+            a{
+                text-decoration:none;
+            }
+        </style>
+    </head>
+    <body ontouchstart>
+        <!-- 搜索部分 -->
+        <div class="warp" style="position: relative;">
+            <div class="search" style="">
+                <div class="collapse" id="collapseExample">
+                      <div class="well">
+                        <!-- 查询列表 -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="" >
+                                <font style="color: #888;display: inline-block;">项目名称：</font>
+                                <input type="text" class="mui-input-clear" id="xmmc" style="width:170px;height: 30px;display: inline-block;">
+                                <button type="button" id="cx" onclick="sousuo();" class="btn btn-primary btn-sm" style="position: relative;top: -2px;left:5px;display: inline-block;">
+                                    查询
+                                </button>
+                            </li>
+                            <li class="" style="">
+                                <font style="color: #888">年份：</font>
+                                <div class="iDate date" style="height: 30px;">
+                                    <input type="text" id="jsnd" style="height: 30px;" >
+                                    <button type="button" class="addOn"></button>
+                                </div>
+                                <font style="color: #888;margin-left: 3px;">建设性质：</font>
+                                <select style="height: 30px;width:90px;border-color:#eeeeee;" id="jsxz" class="sele">
+                                        <option value="">请选择</option>   
+                                        <option value="0">新建</option>   
+                                        <option value="3">扩建</option>   
+                                        <option value="2">改建</option>   
+                                </select>   
+                            </li>
+                            <li>
+                                <font style="color: #888">是否产业类项目：</font>
+                                <select id="sfcylxm" name="sfcylxm" style="width:48%;height: 30px" class="input-xlarge">
+                                    <option value="" selected="selected">请选择</option>
+                                    <option value="1">是</option><option value="0">否</option>
+                                </select>
+                            </li>
+                            <li class="" style="">
+                                <font style="color: #888">责任单位：</font>
+                                <select style="height: 30px;width:60%;border-color:#eeeeee" id="zrdw" class="sele">
+                                         
+                                </select>  
+                            </li>
+                            <li>
+                                <font style="color: #888">投资来源：</font>
+                                <select id="tzly" name="tzly" style="width:60%;height: 30px" class="input-xlarge">
+                                    <option value="" selected="selected">请选择</option>
+                                    <option value="1">新区级新城管委会投资</option><option value="2">社会投资</option>
+                                </select>
+                            </li>
+                            <li>
+                                <font style="color: #888;position: relative;top:4px;">行业类别：</font>
+                                <input type="button" id="hylb" data-toggle="modal" data-target="#myModal" style="width: 60%;height: 30px;background-color: #eee;" value="" readonly="readonly" name="">
+                            </li>
+                            <li class="" style="margin-top:10px;">
+                                <font style="color: #888">总投资：</font>
+                                <input type="text" class="mui-input-clear" style="height: 30px;width:66px;" id="ztz1" style="float:left">
+                                <span>—</span>
+                                <input type="text" class="mui-input-clear" style="height: 30px;width:66px;" id="ztz2" style="">&nbsp;&nbsp;<span style="color:#666;">万元</span>
+                            </li>
+
+                        </ul>
+                      </div>
+                </div>
+                <a class="search_img" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <img src="../img/bottom.png" id="search_img" alt="">
+                </a>
+                <!-- collapse -->
+            </div>
+        </div>
+        <!-- 列表部分 -->
+        <div id="pullrefresh" class="mui-content mui-scroll-wrapper xm_sec">
+            <div class="mui-scroll">
+                <!--数据列表-->
+                <ul class="mui-table-view mui-table-view-chevron" id="xm_list">
+                   
+                </ul>
+            </div>
+        </div>
+        <script type="text/x-dot-template" id="tempList">
+            {{~it.page.list:value:index}}
+            <li class="li_list"  id="li_list">
+                <a class="listItem" tid="{{= value.id}}" href="javascript:0">
+                    <div class="hui-media-content">
+                        <h4>{{= value.xmmc}}</h4>
+                        <h5 class="ztz">总投资：{{=value.ztz}} 万元</h5>
+                        <h5>责任单位：{{=value.zrdw.name}}</h5>
+                    </div>
+                </a>
+            </li>
+            {{~}}
+        </script>
+        <script type="text/x-dot-template" id="zrdwList">
+            <option value="" selected="selected">请选择</option>  
+            {{~it.zrdwList:value:index}}
+            <option value="{{=value.id}}">{{= value.name}}</option>  
+            {{~}}
+        </script>
+        <!-- Modal 模态框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">请选择行业类别</h4>
+              </div>
+              <div class="modal-body">
+                    <ul id="treeDemo" class="ztree" style="width:250px;"></ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </body>
+    <script>
+            $(function(){
+                FastClick.attach(document.body);
+                    xmList()
+                    $('#collapseExample').on('show.bs.collapse', function () {
+                             $("#search_img").attr("src","../img/top.png")
+                        })
+                         $('#collapseExample').on('hide.bs.collapse', function () {
+                             $("#search_img").attr("src","../img/bottom.png")
+                            })
+                    mui('body').on('tap', 'a.listItem', function () { 
+                        var id=$(this).attr("tid")
+                        document.location.href ="./xq/xjdetail.html?id="+id+"&xmlb=qq" });
+                })
+                var sessionid = localStorage.getItem("sessionid");
+                var defaultdate;
+                var data={
+                    pageNo:1,
+                    pageSize:10
+                 }
+                 function xmList() {
+                    zhpost(QQLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                        defaultdate=result.xmMain.jsnd;
+                        var temp_text=doT.template($("#tempList").text())
+                        $('#xm_list').html(temp_text(result));
+                        // 责任单位的列表获取
+                        $('#zrdw').html(doT.compile($("#zrdwList").html())(result));
+                        // 初始化上拉加载
+                        var sum=(Math.ceil((result.page.count)/10));
+                        mui('#pullrefresh').pullRefresh().refresh(true);
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(sum<=1); 
+                         // date time picker
+                            if ($(".iDate.full").length > 0) {
+                                $(".iDate.full").datetimepicker({
+                                    locale : "zh-cn",
+                                    format : "YYYY",
+                                    dayViewHeaderFormat : "YYYY",
+                                    defaultDate:defaultdate 
+
+                                });
+                            }
+                            if ($(".iDate.date").length > 0) {
+                                $(".iDate.date").datetimepicker({
+                                    locale : "zh-cn",
+                                    format : "YYYY",
+                                    dayViewHeaderFormat : "YYYY",
+                                    defaultDate: defaultdate  
+                                });
+                            }
+                            //时间控件结束
+
+
+
+                    });
+                }
+                
+                 function sousuo() {
+                    pageNo=2;
+                    $('#collapseExample').collapse('hide');
+                    var jsnd=$('#jsnd').val();
+                    var xmmc=$('#xmmc').val();
+                    var jsxz=$('#jsxz').val();
+                    var sfcylxm=$('#sfcylxm').val();
+                    var ztz1=$('#ztz1').val();
+                    var ztz2=$('#ztz2').val();
+                    var zrdw=$('#zrdw').val();
+                    var tzly=$('#tzly').val();
+                    var hylb=$('#hylb').val();
+                    var hylbId=$('#hylb').attr("name");
+                    var data={
+                            pageNo:1,
+                            pageSize:10,
+                            jsnd:jsnd,
+                            xmmc:xmmc,
+                            jsxz:jsxz,
+                            formZtzq:ztz1,
+                            formZtzh:ztz2,
+                            "zrdw.id":zrdw,
+                            "xmlb.name":hylb,
+                            "xmlb.id":hylbId,
+                            sfcylxm:sfcylxm,
+                            tzly:tzly
+                            };
+                    zhpost(QQLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                        var temp_text=doT.template($("#tempList").text())
+                            $('#xm_list').html(temp_text(result));
+                        var sum=(Math.ceil((result.page.count)/10));
+                        mui('#pullrefresh').pullRefresh().refresh(true);
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(sum<=1); //参数为true代表没有更多数据了。
+                    });
+                }
+                // 初始化上拉加载
+                mui.init({
+                    pullRefresh: {
+                        container: '#pullrefresh',
+                        up: {
+                            contentrefresh: '正在加载...',
+                            callback: pullupRefresh
+                        }
+                    }
+                });
+            /**
+             * 上拉加载具体业务实现
+             */
+            var pageNo=2;
+            function pullupRefresh() {  
+                    var jsnd=$('#jsnd').val();
+                    var xmmc=$('#xmmc').val();
+                    var jsxz=$('#jsxz').val();
+                    var sfcylxm=$('#sfcylxm').val();
+                    var ztz1=$('#ztz1').val();
+                    var ztz2=$('#ztz2').val();
+                    var zrdw=$('#zrdw').val();
+                    var tzly=$('#tzly').val();
+                    var hylb=$('#hylb').val();
+                    var hylbId=$('#hylb').attr("name");
+                    var data={
+                            pageNo:pageNo,
+                            pageSize:10,
+                            jsnd:jsnd,
+                            xmmc:xmmc,
+                            jsxz:jsxz,
+                            formZtzq:ztz1,
+                            formZtzh:ztz2,
+                            "zrdw.id":zrdw,
+                            "xmlb.name":hylb,
+                            "xmlb.id":hylbId,
+                            sfcylxm:sfcylxm,
+                            tzly:tzly
+                        };
+                    zhpost(QQLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
+                         $('#xm_list').append(doT.compile($("#tempList").html())(result));
+                            var sum=(Math.ceil((result.page.count)/10));
+                            mui('#pullrefresh').pullRefresh().endPullupToRefresh((pageNo>=sum)); //参数为true代表没有更多数据了。
+                            pageNo++;
+                    });
+            }
+        </script>
+         <script>
+           var zTreeObj;
+           // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+           var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: 0
+                    }
+                },
+                view: {
+                        dblClickExpand: false//屏蔽掉双击事件
+                    },
+                callback: {
+                    onClick: ztreeOnclick
+                }
+           };
+           // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+           $(document).ready(function(){
+                zhpost(HYLB+";JSESSIONID=" + sessionid, data).then( function(result) {
+                    console.log(result)
+                    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, result);
+
+                });
+           });
+            function ztreeOnclick(e,treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.expandNode(treeNode);
+                $("#hylb").val(treeNode.name)
+                $("#hylb").attr("name",treeNode.id)
+            }
+        </script>
+</html>

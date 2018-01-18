@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" href="weui/weui.css">
+    <script src="weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="weui/jquery-weui.css">
+    <script src="weui/zepto.js"></script>
+    <script src="weui/fastclick.js"></script>
+    <script src=""></script>
+    <script src="weui/jquery-weui.js"></script>
+    <script src="js/util.js"></script>
+    <script>
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    </script>
+    <style>
+        body{
+            background: url("./img/login1.jpg") center top no-repeat;
+            z-index: -99!important;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+        .warp{
+            margin: auto;
+            position: relative;
+            top: 210px;
+            left: 0;
+            right: 0;
+            width:75%;
+        }
+        .register{
+            height: 45px;
+            line-height: 45px;
+            font-size: 20px;
+            color: #888;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        .weui-cells__title{
+            margin: 0;
+            height: 40px;
+            line-height: 40px;
+            font-size: 15px;
+        }
+        .weui-cells{
+            border: 1px solid #ddd!important;
+            border-radius: 30px!important;
+            background: rgba(230,230,230,.7);
+        }
+        .weui-btn{
+            width: 70%!important;
+        }
+        input:focus,
+        input:active:focus,
+        input.active:focus,
+        input.focus,
+        input:active.focus,
+        input.active.focus {
+            outline: none;
+        }
+        .center{
+            text-align: center;
+        }
+        .bgc{
+            background-color:#56B3F6;
+            color: #fff;
+            font-size: 22px;
+            border: 1px solid #56B3F6!important;
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="warp">
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="login" placeholder="用户名" value="">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input id="pw" class="weui-input" type="password" placeholder="密码" value="">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells bgc">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input id="login_btn" class="weui-input center" type="button" value="立即登录" onclick="login()">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function login(){
+         // 登陆接口'/a/login'
+        var username=$("#login").val();
+        var password=$("#pw").val();
+        $.ajax({
+            type:"POST",
+            url:targetUrl+LOGIN,
+            data: {
+                username:username, 
+                password:password,
+                mobileLogin : 'true',
+                entrance:"611100"
+            },
+            dataType: "json",
+            success:function (data) {
+                if(data.user){
+                     for(var i=0;i<data.config.length;i++){
+                        if(data.config[i].identification=="con_year"){
+                        localStorage.setItem("tbnd",data.config[i].paraValue);
+                        }
+                    }
+                    localStorage.setItem("nick_name",data.user.name);
+                    localStorage.setItem("login_name",data.user.loginName);
+                    localStorage.setItem("sessionid",data.user.sessionid);
+                    window.location.href="./index.html"
+                }else{
+                    alert(data.message)
+                }
+            }
+
+        });
+    }
+</script>
+</html>
