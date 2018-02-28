@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>月度行业明细表</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/demo.css" type="text/css">
+    <link rel="stylesheet" href="../css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="../date-picker/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/doT.js"></script>
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../date-picker/moment.js"></script>
+    <script type="text/javascript" src="../js/jquery.ztree.core.js"></script>
+    <script src="../date-picker/bootstrap-datetimepicker.js"></script>
+    <script src="../js/hylbinit.js"></script>
+</head>
+<style>
+body{
+  color:14px;
+  position: relative;
+}
+thead{
+  background-color: #F5FBFF;
+}
+.search{
+    position: fixed;
+    text-align: center;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+.warp{
+  position: relative;	
+}
+.well{
+  margin-bottom: 0;
+}
+.well ul li{
+  text-align: left;
+  padding-left: 10px;
+}
+.ctl{
+ max-width: 130px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+.hylbinit{
+    align-items:
+    flex-start
+    ;
+    background-clip:
+    padding-box
+    ;
+    background-color:
+    rgb(238, 238, 238)
+    ;
+    border-bottom-color:
+    rgb(204, 204, 204)
+    ;
+    border-bottom-left-radius:
+    3px
+    ;
+    border-bottom-right-radius:
+    3px
+    ;
+    border-bottom-style:
+    solid
+    ;
+    border-bottom-width:
+    1px
+    ;
+    border-image-outset:
+    0px
+    ;
+    border-image-repeat:
+    stretch
+    ;
+    border-image-slice:
+    100%
+    ;
+    border-image-source:
+    none
+    ;
+    border-image-width:
+    1
+    ;
+    border-left-color:
+    rgb(204, 204, 204)
+    ;
+    border-left-style:
+    solid
+    ;
+    border-left-width:
+    1px
+    ;
+    border-right-color:
+    rgb(204, 204, 204)
+    ;
+    border-right-style:
+    solid
+    ;
+    border-right-width:
+    1px
+    ;
+    border-top-color:
+    rgb(204, 204, 204)
+    ;
+    border-top-left-radius:
+    3px
+    ;
+    border-top-right-radius:
+    3px
+    ;
+    border-top-style:
+    solid
+    ;
+    border-top-width:
+    1px
+    ;
+    box-sizing:
+    border-box
+    ;
+    color:
+    rgb(51, 51, 51)
+    ;
+    cursor:
+    pointer
+    ;
+    display:
+    inline-block
+    ;
+    font-family:
+    "Helvetica Neue", Helvetica, sans-serif
+    ;
+    font-size:
+    14px
+    ;
+    font-stretch:
+    100%
+    ;
+    font-style:
+    normal
+    ;
+    font-variant-caps:
+    normal
+    ;
+    font-variant-east-asian:
+    normal
+    ;
+    font-variant-ligatures:
+    normal
+    ;
+    font-variant-numeric:
+    normal
+    ;
+    font-weight:
+    400
+    ;
+    height:
+    30px
+    ;
+    letter-spacing:
+    normal
+    ;
+    line-height:
+    19.88px
+    ;
+    list-style-image:
+    none
+    ;
+    list-style-position:
+    outside
+    ;
+    list-style-type:
+    circle
+    ;
+    margin-bottom:
+    0px
+    ;
+    margin-left:
+    0px
+    ;
+    margin-right:
+    0px
+    ;
+    margin-top:
+    0px
+    ;
+    outline-color:
+    rgb(51, 51, 51)
+    ;
+    outline-style:
+    none
+    ;
+    outline-width:
+    0px
+    ;
+    padding-bottom:
+    6px
+    ;
+    padding-left:
+    12px
+    ;
+    padding-right:
+    12px
+    ;
+    padding-top:
+    6px
+    ;
+    position:
+    relative
+    ;
+    text-align:
+    center
+    ;
+    text-indent:
+    0px
+    ;
+    text-rendering:
+    auto
+    ;
+    text-shadow:
+    none
+    ;
+    text-size-adjust:
+    100%
+    ;
+    text-transform:
+    none
+    ;
+    transition-delay:
+    0s
+    ;
+    transition-duration:
+    0.2s
+    ;
+    transition-property:
+    all
+    ;
+    transition-timing-function:
+    linear
+    ;
+    user-select:
+    none
+    ;
+    vertical-align:
+    top
+    ;
+    white-space:
+    nowrap
+    ;
+    word-spacing:
+    0px
+    ;
+    writing-mode:
+    horizontal-tb
+    ;
+    -webkit-appearance:
+    none
+    ;
+    -webkit-rtl-ordering:
+    logical
+    ;
+    -webkit-tap-highlight-color:
+    rgba(0, 0, 0, 0)
+    ;
+    -webkit-border-image:
+    none
+    ;
+}
+#contentTable thead th {
+    background-color: #F5FBFF;
+    text-align: center;
+    vertical-align: middle;
+    WORD-BREAK: break-all;
+    WORD-WRAP: break-word;
+    white-space: normal !important;
+}
+
+#contentTable td {
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+    WORD-BREAK: break-all;
+}
+</style>
+<body>
+	<div class="warp">
+		<div class="search" style="">
+           <div class="collapse coll" id="collapseExample">
+             <div class="well">
+               <!-- 查询列表 -->
+               <ul class="nav navbar-nav navbar-right">
+                  <li class="" style="">
+                    <font style="color: #888">年月:</font>
+                    <div class="iDate date" style="margin-left: 37px">
+                        <input type="text" id="formTbyear" style="" >
+                        <button type="button" class="addOn"></button>
+                    </div>
+                    <button type="button" id="cx" onclick="sousuo();" class="btn btn-primary btn-sm" style="position: relative;top: -2px;left:28px;display: inline-block;">
+                        查询
+                    </button>
+                </li>
+                <li class="" style="margin-top:16px;">
+                    <font style="color: #888">责任单位：</font>
+                    <select style="height: 30px;width:60%;border-color:#bbb;" id="zrdw" class="sele">
+
+                    </select>  
+                </li>
+                <li style="margin-top:16px">
+                   <font style="color: #888;position: relative;top:4px;">行业类别：</font>
+                    <input type="button" id="hylb" class="hylbinit"  
+                    style="width: 60%;height: 30px;background-color: #eee;" 
+                    value="" readonly="readonly" name="">
+                </li>
+                <li class="" style="margin-top:16px">
+                    <font style="color: #888">总投资：</font>
+                    <input type="text" class="mui-input-clear" style="height: 30px;width:66px;margin-left: 18px" id="ztz1" style="float:left;">
+                    <span>—</span>
+                    <input type="text" class="mui-input-clear" style="height: 30px;width:66px;" id="ztz2" style="">&nbsp;&nbsp;<span style="color:#666;">万元</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <a class="search_img" role="button" data-toggle="collapse" href="#collapseExample" >
+       <img src="../../img/bottom.png" id="search_img" alt="">
+   </a>
+   <!-- collapse结束 -->
+</div>
+</div>
+<table id="contentTable" class="table table-striped table-bordered table-condensed" style="min-width: 1350px;position: relative;top: 30px;">
+    <colgroup width="120px;"></colgroup>
+    <colgroup width="120px;"></colgroup>
+    <colgroup width="140px;"></colgroup>
+    <colgroup width="100px;"></colgroup>
+    <colgroup width="100px;"></colgroup>
+    <colgroup width="120px;"></colgroup>
+    <colgroup width="100px;"></colgroup>
+    <colgroup width="100px;"></colgroup>
+    <colgroup width="120px;"></colgroup>
+    <colgroup width="120px;"></colgroup>
+    <colgroup width="120px;"></colgroup>
+    <thead>
+        <tr>
+            <th rowspan="2" > 项目名称</th>
+            <th rowspan="2" >投资主体</th>
+            <th rowspan="2" >建设内容及规模</th>
+            <th rowspan="2" >总投资</th>
+            <th colspan="6" class="ytz">年底主要建设内容</th>
+            <th rowspan="2" >责任单位</th>
+        </tr>
+        <tr>
+            <th>年度投资</th>
+            <th >年底形象进度</th>
+            <th >月度投资</th>
+            <th>占年度投资(%)</th>
+            <th >建设内容及形象进度</th>
+            <th >项目存在问题</th>
+        </tr>
+    </thead>
+    <tbody id="xm_list">
+    </tbody>
+</table>
+</script>
+<script type="text/x-dot-template" id="tempList">
+    {{~it.page:value:index}}
+    {{? !value.id}}
+    <tr style="font-weight: bold">
+        {{? index==0}}
+        <td style="text-align: center;" colspan="3">
+            {{= value.xmmc}}
+        </td>
+        {{??}}
+        <td style="text-align: left;" colspan="3">
+            {{= value.xmmc}}
+        </td>
+        {{?}}
+        <td style="text-align: right;">
+            <!-- 总投资 -->
+            {{= value.ztz}}
+        </td>
+        <td style="text-align: right;">
+            <!--年度投资-->
+            {{= value.njhtz}}
+        </td>
+        <td style="text-align: right;">
+        </td>
+        <td style="text-align: right;">
+            <!--月度投资-->
+            {{= value.ydtz}}
+        </td>
+        <td style="text-align: right;">
+            <!--占年度投资-->
+            {{= value.hjZndtz}}
+        </td>
+        <td style="text-align: center;">
+        </td>
+        <td style="text-align: center;">
+        </td>
+        <td style="text-align: center;">
+        </td>
+    </tr>
+    {{??}}
+    <tr class="trisShow ${xmTjbb.isShow==1?'':'hide'}">
+        <td style="text-align: left;">
+            {{=value.xmmc}}
+        </td>
+        <td style="text-align: left;">
+            <!--投资主体-->
+            {{=value.tzzt}}
+        </td>
+        <td style="text-align: left;" title="{{=value.jsnr}}" class="ctl">
+            <!--建设内容及规模-->
+            {{=value.jsnr}}
+        </td>
+
+        <td style="text-align: right;">
+            <!--总投资-->
+            {{=value.ztz}}
+        </td>
+        <td style="text-align: right;">
+            <!--年度投资-->
+            {{=value.njhtz}}
+        </td>
+        <td style="text-align: left;" title=" {{=value.jsnrNd}}" class="ctl">
+           <!--年底形象进度-->
+           {{=value.jsnrNd}}
+       </td>
+       <td style="text-align: right;">
+        <!--月度投资-->
+        {{=value.ydtz}}
+    </td>
+    <td style="text-align: right;">
+        <!--占年度投资-->
+        {{=value.zndtz}}
+    </td>
+    <td style="text-align: left;" title="{{=value.jsnrjxxjd}}" class="ctl">
+        <!--建设内容及形象进度-->
+        {{=value.jsnrjxxjd}}
+    </td>
+    <td style="text-align: left;" title=" {{=value.dzwt}}" class="ctl">
+        <!--项目存在问题-->
+        {{=value.dzwt}}
+    </td>
+    <td style="text-align: left;">
+        {{=value.zrdw}}<!--责任单位-->
+    </td>
+</tr>
+{{?}}
+{{~}}
+</script>
+<script type="text/x-dot-template" id="zrdwList">
+    <option value="" selected="selected">请选择</option>  
+    {{~it.zrdwList:value:index}}
+    <option value="{{=value.id}}">{{= value.name}}</option>  
+    {{~}}
+</script>
+</body>
+<script>
+    //----------------jquery的入口函数及请求列表-----------------------------------------------------------------------------
+    $(function(){
+    FastClick.attach(document.body);
+    xmList()
+    $('#collapseExample').on('show.bs.collapse', function () {
+       $("#search_img").attr("src","../img/top.png")
+   })
+    $('#collapseExample').on('hide.bs.collapse', function () {
+       $("#search_img").attr("src","../img/bottom.png")
+   });
+    
+});
+    ---------------------------------------------------------------------------------------------------
+    function xmList() {
+        zhpost(HYMX,{}).then( function(result) {
+            console.log(result)
+            var temp_text=doT.template($("#tempList").text())
+            $('#xm_list').html(temp_text(result));
+                 // 责任单位的列表获取
+                 $('#zrdw').html(doT.compile($("#zrdwList").html())(result));
+                 var defaultdate=formatDate(result.xmTjbb.formTbyear, 'yyyy-MM');
+                 var curDate= new Date(result.xmTjbb.formTbyear);
+                 initDateTime(defaultdate);
+                 $(".ytz").html(curDate.getFullYear()+"年底主要建设内容");
+             });
+
+    }
+    function getData(){
+        var formTbyear=$('#formTbyear').val();
+        var hylb=$('#hylb').val();
+        var hylbId=$('#hylb').attr("name");
+        var ztz1=$('#ztz1').val();
+        var ztz2=$('#ztz2').val();
+        var zrdw=$('#zrdw').val();
+        var data={
+            "xmlb.name":hylb,
+            "xmlb.id":hylbId,
+            formZtzq:ztz1,
+            formZtzh:ztz2,
+            formZrdw:zrdw,
+            formTbyear:formTbyear
+        };
+        return data;
+    }
+    function sousuo() {
+        $('#collapseExample').collapse('hide');
+        zhpost(HYMX, getData()).then(function(result) {
+            var temp_text=doT.template($("#tempList").text())
+            $('#xm_list').html(temp_text(result));
+            var curDate= new Date(result.xmTjbb.formTbyear);
+            $(".ytz").html(curDate.getFullYear()+"年底主要建设内容");
+        });
+    }
+</script>

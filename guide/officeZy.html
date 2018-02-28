@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>机构管理</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js";></script>
+    <style type="text/css">
+        body{
+            background: url("../img/picture/bg.png") center center repeat-y;
+            background-size:cover;
+        }
+        img{
+            width:100%;
+        }
+        .text{
+            margin:15px 0 10px 10px;
+            color: #337AB7;
+            font-size: 16px;
+        }
+        .pp{
+            margin:0 0 10px 10px;
+            font-size: 14px;
+        }
+        .pic{
+            width:95%;
+            text-align: center;
+            margin:0 auto;
+        }
+        .previewImage-text{
+            display: none;
+        }
+        .previewImage-image{
+            width:100%;
+            
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <p class="text">1.新增机构</p>
+    <div class="pic">
+        <img src="http://192.168.1.250/img/picture/office1.png" alt="">
+    </div>
+    <p class="pp">上级机构用于项目上报，不填则认为平台顶级机构。</p>
+    <p class="pp">输入相应信息完成后点击保存按钮，即新增机构成功。 </p>
+    <p class="text">2.修改/删除机构</p>
+    <p class="pp">点击左侧要修改/删除的机构，当右侧出现如下界面，即可进行机构修改/删除操作</p>
+    <div class="pic">
+        <img src="http://192.168.1.250/img/picture/office2.png" alt="">
+    </div>
+    
+    <p class="text">3.新增部门</p>
+    <div class="pic">
+        <img src="http://192.168.1.250/img/picture/office3.png" alt="">
+    </div>
+    <p class="pp">上级单位为必填项。</p>
+    <p class="pp">输入相应信息完成后点击保存按钮，即新增部门成功。</p>
+
+    <p class="text">4.修改/删除部门</p>
+    <p class="pp">点击左侧要修改/删除的部门，当右侧出现如下界面，即可进行部门修改/删除操作</p>
+    <div class="pic">
+        <img src="http://192.168.1.250/img/picture/office4.png" alt="">
+    </div>
+</body>
+<script type="text/javascript" src="../bigger_pic/previewImage.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+     $(".pic img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>
+
+
+

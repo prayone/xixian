@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
        ">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../hui/css/hui.css">
     <link rel="stylesheet" href="../../weui/weui.css">
     <script src="../../weui/jquery-2.1.4.js"></script>
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="../../weui/jquery-weui.css">
     <link rel="stylesheet" href="../../swiper/idangerous.swiper.css">
     <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/bootstrap.min.js"></script>
     <script src="../../swiper/idangerous.swiper.js"></script>
     <script src="../../weui/zepto.js"></script>
     <script src="../../weui/fastclick.js"></script>
@@ -25,70 +27,282 @@
     <script type="text/javascript" src="../../js/doT.js"></script>
     <script>
         var sessionid = localStorage.getItem("sessionid");
+        var permission = localStorage.getItem("permission");
+        var user_level = localStorage.getItem("user_level");
+        var user_zrdw = localStorage.getItem("user_zrdw");
+        var xm_level;
+        var xm_zrdw;
         $(function() {
             FastClick.attach(document.body);
         });
             var id=getQueryString("id");
             var xmlb=getQueryString("xmlb");
+            var lblb=getQueryString("lblb");
+            var ldlx=getQueryString("ldlx");
             var data={id:id};
-            if(xmlb=="jzkg"){
+            if(xmlb=="sbkjzkg"||xmlb=="xmkjzkg"){
                  zhget(JZKGDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
-                    result.base_url=targetUrl;
+                    result.xmMain.base_url=targetUrl;
+                    result.xmMain.lblb=lblb;
+                    result.xmMain.xmlb_myself=xmlb;
+                    result.xmMain.zrdwL=result.zrdwList.length;
+                    result.xmMain.permission=permission;
+                    result.xmMain.user_level=user_level;
+                    xm_level=result.xmMain.xmLevel;
+                    xm_zrdw=result.xmMain.zrdw.name;
+
                     var temp_text=doT.template($("#tempList").text())
-                    $('#xm_list').html(temp_text(result));
+                    $('#xm_list').html(temp_text(result.xmMain));
                 });
-            }else if(xmlb=="qq"){
-                 zhget(QQDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
+            }else if(xmlb=="sbkqq"||xmlb=="xmkqq"){
+                 zhget(QQDETAIL+";JSESSIONID=" + sessionid, data).then(function(result) {
+                    result.xmMain.base_url=targetUrl;
+                    result.xmMain.lblb=lblb;
+                    result.xmMain.xmlb_myself=xmlb;
+                    result.xmMain.zrdwL=result.zrdwList.length;
+                    result.xmMain.permission=permission;
+                    xm_level=result.xmMain.xmLevel;
+                    xm_zrdw=result.xmMain.zrdw.name;
+
+
+
                     var temp_text=doT.template($("#qqtempList").text())
-                    $('#xm_list').html(temp_text(result));
+                    $('#xm_list').html(temp_text(result.xmMain));
+                    var temp_zrdw=doT.template($("#zrdwtempList").text())
+                    $('#zrdw_list').html(temp_zrdw(result.zrdwList));
                 });
             }else if(xmlb=="ppp"){
                 zhget(PPPDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
                     result.base_url=targetUrl;
+                    result.xmMain.lblb=lblb;
                     console.log(result)
                     var temp_text=doT.template($("#ppptempList").text())
                     $('#xm_list').html(temp_text(result));
                 });
             }else{
                 zhget(XJDETAIL+";JSESSIONID=" + sessionid, data).then( function(result) {
-                    result.base_url=targetUrl;
+                    result.xmMain.base_url=targetUrl;
+                    result.xmMain.lblb=lblb;
+                    result.xmMain.ldlx=ldlx;
+                    result.xmMain.xmlb_myself=xmlb;
+                    result.xmMain.zrdwL=result.zrdwList.length;
+                    result.xmMain.permission=permission;
+                    xm_level=result.xmMain.xmLevel;
+                    xm_zrdw=result.xmMain.zrdw.name;
+
+
                     var temp_text=doT.template($("#tempList").text())
-                    $('#xm_list').html(temp_text(result));
+                    $('#xm_list').html(temp_text(result.xmMain));
+                    var temp_zrdw=doT.template($("#zrdwtempList").text())
+                    $('#zrdw_list').html(temp_zrdw(result.zrdwList));
                 });
             }
-           
-           /*时间格式转换*/
-    function formatDate(date, format) {
-        if (!date) return;
-        if (!format) format = "yyyy-MM-dd";
-        switch (typeof date) {
-            case "string":
-                date = new Date(date.replace(/-/, "/"));
-                break;
-            case "number":
-                date = new Date(date);
-                break;
+        function fpdw(){
+            var xmid=$(".xmmc").attr("xmid");
+            var zrdw=$("#zrdw_list").val();
+            var data={
+                ids:xmid,
+                zrdw:zrdw,
+                url:''
+            }
+            if($("#zrdw_list").val()){
+                  zhpost(FPLD+";JSESSIONID=" + sessionid, data).then( function(result) {
+                      if(result=="success"){
+                        hui.upToast('操作成功!')
+                        $('#myModal').modal('hide');
+                      }else{
+                         alert("操作失败！")
+                      }
+                 });
+            }else{
+                alert("分配单位不能为空！")
+            }
         }
-        if (!date instanceof Date) return;
-        var dict = {
-            "yyyy": date.getFullYear(),
-            "M": date.getMonth() + 1,
-            "d": date.getDate(),
-            "H": date.getHours(),
-            "m": date.getMinutes(),
-            "s": date.getSeconds(),
-            "MM": ("" + (date.getMonth() + 101)).substr(1),
-            "dd": ("" + (date.getDate() + 100)).substr(1),
-            "HH": ("" + (date.getHours() + 100)).substr(1),
-            "mm": ("" + (date.getMinutes() + 100)).substr(1),
-            "ss": ("" + (date.getSeconds() + 100)).substr(1)
-        };
-        return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
-            return dict[arguments[0]];
-        });
-    }
-    console.log(formatDate(1509465600000,"yyyy-MM-dd"));
-
+        function rzdxm(){
+            var xmid=$(".xmmc").attr("xmid");
+            var rklb=$(".xmmc").attr("rklb");
+            var data={
+                ids:xmid,
+                rklb:rklb
+            };
+            hui.confirm('您确定要将该项目入重点项目库吗？', ['取消','确定'], function(){
+                zhpost(RZDXM+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("操作失败！")
+                     }
+                });
+            });
+        }
+         function rjzkgxm(){
+            var xmid=$(".xmmc").attr("xmid");
+            var data={
+                ids:xmid
+            };
+            hui.confirm('您确定要将该项目入集中开工项目库吗？', ['取消','确定'], function(){
+                zhpost(RJZKGXM+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("操作失败！")
+                     }
+                });
+            });
+        }
+        function xmbh(){
+            if(user_zrdw==xm_zrdw){
+                alert("该项目责任单位为本单位不能驳回!")
+                return;
+            }
+            var xmid=$(".xmmc").attr("xmid");
+            var data={
+                ids:xmid,
+                url:''
+            };
+            hui.confirm('您确定要驳回该项目吗？', ['取消','确定'], function(){
+                zhpost(XMBH+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("驳回失败")
+                     }
+                });
+            });
+        }
+        function thsbk(){
+            if(user_level>xm_level){
+                alert("该项目已上报，不能退回申报库！")
+                return; 
+            }
+            var xmid=$(".xmmc").attr("xmid");
+            var data={
+                ids:xmid,
+                url:''
+            };
+            hui.confirm('您确定要将该项目退回申报库吗？', ['取消','确定'], function(){
+                zhpost(THSBK+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("退回申报库失败")
+                     }
+                });
+            });
+        }
+         function xmdc(){
+            var xmid=$(".xmmc").attr("xmid");
+            var data={
+                ids:xmid,
+                url:''
+            };
+            hui.confirm('您确定要将该项目调出吗？', ['取消','确定'], function(){
+                zhpost(XMDC+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("操作失败！")
+                     }
+                });
+            });
+        }
+        function ldlxyc(){
+            var xmid=$(".xmmc").attr("xmid");
+            var data={
+                ids:xmid,
+                url:''
+            };
+            hui.confirm('您确定要将该项目移除吗？', ['取消','确定'], function(){
+                zhpost(LDLXYC+";JSESSIONID=" + sessionid, data).then( function(result) {
+                     if(result=="success"){
+                        hui.upToast('操作成功!')
+                     }else{
+                        alert("操作失败！")
+                     }
+                });
+            });
+        }
+        function fpdw_show(xmlb,zrdwLength,permission){
+          
+            if(xmlb=="sbkxj"&&zrdwLength>1&&(permission.indexOf("project:sbkxuj:fpdw"))){
+                return true;
+            }else if(xmlb=="sbkxkg"&&zrdwLength>1&&(permission.indexOf("project:sbkxj:fpdw"))){
+                return true;
+            }else if(xmlb=="xmkxj"&&zrdwLength>1&&(permission.indexOf("project:xmkxuj:fpdw"))){
+                return true;
+            }else if(xmlb=="xmkxkg"&&zrdwLength>1&&(permission.indexOf("project:xmkxj:fpdw"))){
+                return true;
+            }else if(xmlb=="sbkqq"&&zrdwLength>1&&(permission.indexOf("project:sbkqq:fpdw"))){
+                return true;
+            }else if(xmlb=="xmkqq"&&zrdwLength>1&&(permission.indexOf("project:xmkqq:fpdw"))){
+                return true;
+            }else if(xmlb=="ldlx"&&zrdwLength>1&&(permission.indexOf("project:xmkldlx:fpdw"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+         function rzdxm_show(xmlb,permission){
+           
+            if(xmlb=="sbkxj"&&(permission.indexOf("project:sbkxuj:rzdxmk"))){
+                return true;
+            }else if(xmlb=="sbkxkg"&&(permission.indexOf("project:sbkxj:rzdxmk"))){
+                return true;
+            }else if(xmlb=="sbkqq"&&(permission.indexOf("project:sbkqq:rzdxmk"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+         function rjzkgxm_show(xmlb,permission){
+           
+            if(xmlb=="sbkjzkg"&&(permission.indexOf("project:sbkxj:rzdxmk"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        function xmbh_show(xmlb,zrdwLength,permission){
+            
+            console.log(permission)
+            if(xmlb=="sbkxj"&&zrdwLength>1&&(permission.indexOf("project:sbkxuj:xmbh"))){
+                return true;
+            }else if(xmlb=="sbkxkg"&&zrdwLength>1&&(permission.indexOf("project:sbkxj:xmbh"))){
+                return true;
+            }else if(xmlb=="sbkjzkg"&&zrdwLength>1&&(permission.indexOf("project:sbkxj:xmbh"))){
+                return true;
+            }else if(xmlb=="sbkqq"&&zrdwLength>1&&(permission.indexOf("project:sbkqq:xmbh"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+         function thsbk_show(xmlb,permission){
+           
+            if(xmlb=="xmkxj"&&(permission.indexOf("project:xmkxuj:thsbk"))){
+                return true;
+            }else if(xmlb=="xmkxkg"&&(permission.indexOf("project:xmkxj:thsbk"))){
+                return true;
+            }else if(xmlb=="xmkjzkg"&&(permission.indexOf("project:xmkxj:thsbk"))){
+                return true;
+            }else if(xmlb=="xmkqq"&&(permission.indexOf("project:xmkqq:thsbk"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        function xmdc_show(xmlb,permission){
+           
+            if(xmlb=="xmkxj"&&(permission.indexOf("project:xmkxuj:xmdc"))){
+                return true;
+            }else if(xmlb=="xmkxkg"&&(permission.indexOf("project:xmkxj:xmdc"))){
+                return true;
+            }else if(xmlb=="xmkqq"&&(permission.indexOf("project:xmkqq:xmdc"))){
+                return true;
+            }else{
+                return false;
+            }
+        }
     </script>
     <style>
        body{
@@ -131,6 +345,29 @@
         div{
             padding-left: 5px;
         }
+        img{
+            width: 100%;
+            height:100%;
+        }
+        .xm_pic{
+            margin-right: 10px;
+            height:200px;
+        }
+        .caozuo{
+            text-align: right;
+            margin-bottom: 20px;
+
+        }
+        .btn_li{
+            display: inline-block;
+            height:60px;
+            line-height: 60px;
+        }
+        .caozuo li button{
+            padding:0 10px;
+            font-size: 14px;
+            line-height: 30px;
+        }
     </style>
 </head>
 <body ontouchstart>
@@ -139,7 +376,10 @@
     </div>
     <!-- 续建、新开工、集中开工 -->
     <script type="text/x-dot-template" id="tempList">
-        <div class="center xmmc">{{= it.xmmc}}</div>
+        <div class="center xmmc" xmid="{{=it.id}}" rklb="{{= it.rklb}}">{{= it.xmmc}}</div>
+        <div class="xm_pic">
+            <img src="{{=it.base_url}}{{=it.pic}}" onerror="this.src='../../images/xm_pic.jpg'" alt="">
+        </div>
         <ul>
             <li class="litter_tit">基础信息</li>
             <li>行业类别：{{= it.xmlb.name}}</li>
@@ -222,16 +462,42 @@
 
                     <div class="bor">附件：<a href="{{= it.base_url}}{{= it.xmPwjwhList[7].fpath}}" style="color: red;">{{= it.xmPwjwhList[7].fname}}</a></div>
                 </p>
-                
         </div>
         <ul>
             <li class="litter_tit">项目属性信息</li>
             <li>重点级别：{{= it.zdjbName}}</li>
         </ul>
+        <ul class="caozuo">
+            <li class="litter_tit" style="text-align: left;">项目操作</li>
+            {{? fpdw_show(it.xmlb_myself,it.zrdwL,it.permission) }}
+            <li class="btn_li" data-toggle="modal" data-target="#myModal"><button>分配单位</button></li>
+            {{?}}
+            {{? rzdxm_show(it.xmlb_myself,it.permission) }}
+            <li class="btn_li" onclick="rzdxm();"><button>入重点项目库</button></li>
+            {{?}}
+            {{? rjzkgxm_show(it.xmlb_myself,it.permission) }}
+            <li class="btn_li" onclick="rjzkgxm();"><button>入集中开工项目库</button></li>
+            {{?}}
+            {{? xmbh_show(it.xmlb_myself,it.zrdwL,it.permission)}}
+            <li class="btn_li" onclick="xmbh();"><button>项目驳回</button></li>
+            {{?}}
+            {{? it.ldlx=="ldlx"}}
+            <li class="btn_li" onclick="ldlxyc();"><button>从该库中移除</button></li>
+            {{?}}
+            {{? thsbk_show(it.xmlb_myself,it.permission) }}
+            <li class="btn_li" onclick="thsbk();"><button>退回申报库</button></li>
+            {{?}}
+            {{? xmdc_show(it.xmlb_myself,it.permission) }}
+            <li class="btn_li" onclick="xmdc();"><button>项目调出</button></li>
+            {{?}}
+        </ul>
     </script>
     <!-- 前期项目 -->
     <script type="text/x-dot-template" id="qqtempList">
-        <div class="center xmmc">{{= it.xmmc}}</div>
+        <div class="center xmmc" xmid="{{=it.id}}" rklb="{{= it.rklb}}">{{= it.xmmc}}</div>
+        <div class="xm_pic">
+            <img src="../../images/xm_pic.jpg" alt="">
+        </div>
             <ul>
                 <li>建设性质：{{= it.jsxzName}}</li>
                 <li>是否产业类项目：{{= it.sfcylxmName}}</li>
@@ -245,10 +511,31 @@
             <p>建设内容及规模：{{= it.jsnr}}</p>
             <p>主要工作进展情况：{{= it.zygz}}</p>
             <p>2017年工作目标：{{= it.jsnrNd}}</p>
+            <ul class="caozuo">
+                <li class="litter_tit" style="text-align: left;">项目操作</li>
+                {{? fpdw_show(it.xmlb_myself,it.zrdwL,it.permission) }}
+                <li class="btn_li" data-toggle="modal" data-target="#myModal"><button>分配单位</button></li>
+                {{?}}
+                {{? rzdxm_show(it.xmlb_myself,it.permission) }}
+                <li class="btn_li" onclick="rzdxm();"><button>入重点项目库</button></li>
+                {{?}}
+                {{? xmbh_show(it.xmlb_myself,it.zrdwL,it.permission)}}
+                <li class="btn_li" onclick="xmbh();"><button>项目驳回</button></li>
+                {{?}}
+                {{? thsbk_show(it.xmlb_myself,it.permission) }}
+                <li class="btn_li" onclick="thsbk();"><button>退回申报库</button></li>
+                {{?}}
+                {{? xmdc_show(it.xmlb_myself,it.permission) }}
+                <li class="btn_li" onclick="xmdc();"><button>项目调出</button></li>
+                {{?}}
+            </ul>
     </script>
     <!-- ppp项目 -->
     <script type="text/x-dot-template" id="ppptempList">
         <div class="center xmmc" >{{= it.xmmc}}</div>
+        <div class="xm_pic">
+            <img src="../../images/xm_pic.jpg" alt="">
+        </div>
         <ul>
             <li class="litter_tit">基础信息</li>
             <li>入库类别：{{= it.rklbName}}</li>
@@ -351,6 +638,46 @@
             <li>项目移交时间：{{= it.xmyjsj}}</li>
         </ul>
         {{?}}
+        <!-- <ul class="caozuo">
+            <li class="litter_tit" style="text-align: left;">项目操作</li>
+            {{? it.lblb=="sbk"}}
+            <li class="btn_li" onclick="rpppxm();"><button>入PPP项目库</button></li>
+            <li class="btn_li" onclick="xmbh();"><button>项目驳回</button></li>
+            {{??}}
+            <li class="btn_li" onclick="thsbk();"><button>退回申报库</button></li>
+            {{?}}
+            <li class="btn_li" onclick="thsbk();"><button>调至基础库</button></li>
+            <li class="btn_li" onclick="thsbk();"><button>调至意向库</button></li>
+            <li class="btn_li" onclick="thsbk();"><button>调至执行库</button></li>
+
+        </ul> -->
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">分配责任单位</h4>
+          </div>
+          <div class="modal-body">
+                <p style="color:#317EAC;">您将为该项目分配的责任单位为:</p>
+                <select name="" id="zrdw_list" style="width: 150px;height:30px;border-color: #aaa;">
+
+                </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" onclick="fpdw();">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/x-dot-template" id="zrdwtempList">
+        <option value="">请选择</option>
+        {{~it:value:index}}
+        <option value="{{=value.id}}">{{=value.name}}</option>
+        {{~}}
     </script>
 </body>
 </html>

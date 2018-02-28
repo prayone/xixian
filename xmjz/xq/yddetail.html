@@ -207,10 +207,18 @@
             <ul>
                     <li>{{=formatDate(value.tbyear,"MM")}}月度投资：{{= value.ydtz}}</li>
                     <li>占年度投资：{{= value.zndtz}}%</li>
-                    <li>施工状态：{{= value.sgztName}}</li>
+                    {{? value.sgzt==1}}
+                    <li>施工状态：已开工</li>
+                    {{?? value.sgzt==2}}
+                    <li>施工状态：已竣工</li>
+                    {{??}}
+                    <li>施工状态：未开工</li>
+                    {{?}}
             </ul>
             <p>主要建设内容及形象进度：{{= value.jsnrjxxjd}}</p>
             <p>项目存在问题：{{= value.dzwt}}</p>
+
+            
             <div class="swiper-container" id="swiper-container">
                 <div class="swiper-wrapper">
                     {{~ value.ydJzPicList:val:inde}}

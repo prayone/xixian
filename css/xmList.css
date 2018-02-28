@@ -1,0 +1,8 @@
+ @media screen and (max-width: 325px) {
+ 	.li_list .listItem .xm_pic{
+ 		width:100px!important;
+ 	}
+ 	.li_list .listItem h5{
+ 		line-height: 18px!important;
+ 	}
+ }

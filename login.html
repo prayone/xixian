@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>登录</title>
-    <link rel="stylesheet" href="weui/weui.css">
+    <link rel="stylesheet" href="./fonts/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="weui/weui.css"> -->
     <script src="weui/jquery-2.1.4.js"></script>
-    <link rel="stylesheet" href="weui/jquery-weui.css">
+    <!-- <link rel="stylesheet" href="weui/jquery-weui.css">  -->
     <script src="weui/zepto.js"></script>
     <script src="weui/fastclick.js"></script>
-    <script src=""></script>
     <script src="weui/jquery-weui.js"></script>
     <script src="js/util.js"></script>
     <script>
@@ -20,119 +19,112 @@
         });
     </script>
     <style>
-        body{
-            background: url("./img/login1.jpg") center top no-repeat;
-            z-index: -99!important;
-            background-size: cover;
-            background-attachment: fixed;
-            position: relative;
-        }
-        .warp{
-            margin: auto;
-            position: relative;
-            top: 210px;
-            left: 0;
-            right: 0;
-            width:75%;
-        }
-        .register{
-            height: 45px;
-            line-height: 45px;
-            font-size: 20px;
-            color: #888;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-        .weui-cells__title{
-            margin: 0;
-            height: 40px;
-            line-height: 40px;
-            font-size: 15px;
-        }
-        .weui-cells{
-            border: 1px solid #ddd!important;
-            border-radius: 30px!important;
-            background: rgba(230,230,230,.7);
-        }
-        .weui-btn{
-            width: 70%!important;
-        }
-        input:focus,
-        input:active:focus,
-        input.active:focus,
-        input.focus,
-        input:active.focus,
-        input.active.focus {
-            outline: none;
-        }
-        .center{
-            text-align: center;
-        }
-        .bgc{
-            background-color:#56B3F6;
-            color: #fff;
-            font-size: 22px;
-            border: 1px solid #56B3F6!important;
-        }
-    </style>
+    body{
+        margin:0;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+    }
+    .logo{
+        width: 100%;
+        height: 80px;
+        background-color: #536ea6;
+        margin-bottom: 90px; 
+    }
+    .cont{
+        width: 100%;
+        margin: 0 auto;
+    }
+    .input-group{
+        text-align: center;
+        overflow: hidden;
+        display: table;
+    }
+    .input-group span{
+        float: left;
+        display:inline-block;
+        width: 44px;
+        height: 48px;
+        line-height: 48px;
+        color: #8a8a8a;
+        text-align: center;
+        border: 1px solid #c2c5cc;
+        border-right: none;
+        border-top-left-radius: 4px!important;
+        border-bottom-left-radius: 4px!important;
+    }
+    .input-group input{
+        color: #8A8A8A;
+        padding:0 0 0 20px; 
+        float: left;
+        width: 240px;
+        height: 48px;
+        border: 1px solid #c2c5cc;
+        border-bottom-right-radius: 4px!important;
+        border-top-right-radius: 4px!important;
+    }
+    .btn{
+        width: 100%;
+        text-align: center;
+        margin-top: 60px;
+
+    }
+    .btn button{
+        width: 85%;
+        height:60px;
+        background-color: #536ea6;
+        /*background-color: #B23211;*/
+        border:none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 60px;
+    }
+</style>
 </head>
 <body ontouchstart>
-<div class="warp">
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="text" id="login" placeholder="用户名" value="">
-            </div>
+    <div class="logo">
+        <!-- <img src="./images/mingzi1.png" alt=""> -->
+        <img src="./images/logo1.png" alt="">
+    </div>
+    <div class="cont">
+        <div class="input-group">
+            <span class="fa fa-user" style=""></span>
+            <input type="text" class="form-control"  id="login" name="EmailPhoneNcke" placeholder="请输入用户名..." aria-invalid="true" value="18082208598">
+            <i></i>
+        </div>
+        <div class="input-group" style="margin-top: 30px;">
+            <span class="fa fa-unlock-alt" style=""></span>
+            <input type="password" class="form-control" id="pw" name="EmailPhoneNcke" placeholder="请输入密码..." aria-invalid="true" value="admin123">
+        </div>
+        <div class="btn">
+            <button onclick="login()" id="login_btn">立即登录</button>
         </div>
     </div>
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <input id="pw" class="weui-input" type="password" placeholder="密码" value="">
-            </div>
-        </div>
-    </div>
-    <div class="weui-cells bgc">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <input id="login_btn" class="weui-input center" type="button" value="立即登录" onclick="login()">
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 <script>
+    $(function(){
+        var marLeft=($("body").width()-307)/2;
+        $(".input-group").css("margin-left",marLeft+"px");
+    })
     function login(){
-         // 登陆接口'/a/login'
-        var username=$("#login").val();
-        var password=$("#pw").val();
-        $.ajax({
-            type:"POST",
-            url:targetUrl+LOGIN,
-            data: {
-                username:username, 
-                password:password,
-                mobileLogin : 'true',
-                entrance:"611100"
-            },
-            dataType: "json",
-            success:function (data) {
-                if(data.user){
-                     for(var i=0;i<data.config.length;i++){
-                        if(data.config[i].identification=="con_year"){
-                        localStorage.setItem("tbnd",data.config[i].paraValue);
-                        }
-                    }
-                    localStorage.setItem("nick_name",data.user.name);
-                    localStorage.setItem("login_name",data.user.loginName);
-                    localStorage.setItem("sessionid",data.user.sessionid);
-                    window.location.href="./index.html"
-                }else{
-                    alert(data.message)
-                }
-            }
-
+       var username=$("#login").val();
+       var password=$("#pw").val();
+       if (username.length < 1 || password.length < 1) {
+            $.toast('账号或密码不能为空！', "forbidden");
+       } else {
+        $.showLoading();
+         login_fun(username,password).then(function(result){
+           $.hideLoading();
+           if(result.message){
+               $.toast(result.message, "forbidden");
+           }else{
+               window.location.href=localStorage.getItem("index_i");
+           }
         });
-    }
+   }
+}
 </script>
 </html>

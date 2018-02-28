@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>导入指引</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <style type="text/css">
+        body{
+            background: url("../img/picture/bg.png") center center repeat-y;
+            background-size:cover;
+
+        }
+        img{
+            width:100%;
+        }
+        .text{
+            margin:15px 0 10px 10px;
+            color: #337AB7;
+            font-size: 16px;
+        }
+        .pp{
+            margin:0 0 10px 10px;
+            font-size: 14px;
+        }
+        .pic{
+            width:95%;
+            text-align: center;
+            margin:0 auto;
+        }
+        .previewImage-text{
+            display: none;
+        }
+        .previewImage-image{
+            width:100%;
+            
+        }
+    </style>
+    <script>
+       
+    </script>
+</head>
+<body ontouchstart>
+    <p class="text">1.批量导入</p>
+    <div class="pic example">
+        <img src="../img/picture/dr1.png" alt="">
+    </div>
+    <p class="pp">在相应的录入页面，点击红框处进入批量导入页面。</p>
+
+    <p class="text">2.下载模版</p>
+    <div class="pic example">
+        <img src="../img/picture/dr2.png" alt="">
+    </div>
+    <p class="pp">点击模版下载按钮下载Excel模版。</p>
+    <div class="pic example">
+        <img src="../img/picture/dr3.png" alt="">
+    </div>
+    <p class="pp">将数据整理至Excel中</p>
+
+    <p class="text">3.导入Excel</p>
+    <div class="pic example">
+        <img src="../img/picture/dr4.png" alt="">
+    </div>
+    <p class="pp">点击上传按钮上传刚刚整理好的Excel,点击导入按钮上传成功。</p>
+
+    <p class="text">4.错误信息提示</p>
+    <div class="pic example">
+        <img src="../img/picture/dr5.png" alt="">
+    </div>
+    <p class="pp">导入Excel失败后根据提示信息修改Excel重新导入。</p>
+</div>
+</body>
+<script type="text/javascript" src="../bigger_pic/previewImage.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+     $(".example img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>
+
+
+

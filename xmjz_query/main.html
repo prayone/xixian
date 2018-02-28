@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目进展</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <link rel="stylesheet" href="../weui/weui.css">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../weui/jquery-weui.css">
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+    <script>
+        $(function() {
+            FastClick.attach(document.body);
+            hui.accordion(true, true);
+            var user_name=localStorage.getItem("user_name");
+            var pass_word=localStorage.getItem("pass_word"); 
+            if(!user_name){
+                window.location.href="../login.html";
+            }
+
+    });
+    </script>
+    <style>
+       .icon_none .hui-accordion-title:after {
+            content: none;
+        }
+        #youyi li{
+            padding-left: 26px;
+       }
+       .hui-list {
+            padding:0;
+       }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="wrap">
+          <div class="hui-accordion">
+              <div class="hui-accordion-title">PPP项目周进展</div>
+                <div class="hui-accordion-content">
+                    <div class="hui-list">
+                        <ul id="youyi">
+                            <li><a href="./jckydList.html">基础库</a></li>
+                            <li><a href="./yxkydList.html">意向库</a></li>
+                            <li><a href="./zxkydList.html">执行库</a></li>
+                        </ul>
+                    </div>
+              </div>
+           </div>
+          <div class="hui-accordion icon_none">
+	           <div class="hui-accordion-title">
+                    <a href="./zdxmydList.html" style="display: block;">重点项目月进展</a>
+               </div>
+		  </div>
+		  
+           <div class="hui-accordion  icon_none">
+                <div class="hui-accordion-title">
+                    <a href="./jzkgydList.html" style="display:block;">集中开工项目月进展</a>
+                </div>
+          </div>
+    </div>
+</body>
+</html>
+

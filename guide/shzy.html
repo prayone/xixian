@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>审核指引</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+        <style type="text/css">
+        body{
+            background: url("../img/picture/bg.png") center center repeat-y;
+            background-size:cover;
+        }
+        img{
+            width:100%;
+        }
+        .text{
+            margin:15px 0 10px 10px;
+            color: #337AB7;
+            font-size: 14px;
+        }
+        .pp{
+            margin:0 10px 10px 10px;
+            font-size: 14px;
+        }
+        .pic{
+            width:95%;
+            text-align: center;
+            margin:0 auto;
+        }
+        .previewImage-text{
+            display: none;
+        }
+        .previewImage-image{
+            width:100%;
+            
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <p class="text">申报库审核</p>
+    <p class="pp">点开申报库菜单，按照“续建”，“新开工”与“前期”查看相应的项目，下面以续建项目为例。（可在申报库对项目进行修改、删除、驳回、入库等审核操作）  </p>
+    <p class="text">1.项目修改 / 删除</p>
+    <div class="pic">
+        <img src="../img/picture/sbkxgsc.png" alt="">
+    </div>
+    <p class="pp">打开申报库，将表格拉至最后一列，即可相应的修改或删除项目。</p>
+    <p class="text">2.入重点项目库</p>
+    <div class="pic">
+        <img src="../img/picture/sbkrzdxmk.png" alt="">
+    </div>
+    <p class="pp">选中需要操作的项目，点击页面下方的入重点项目库按钮，项目即可进入重点项目库。已入库的项目在申报库中仍保留该项目。</p>
+     <p class="text">3.入省考项目库</p>
+    <div class="pic">
+        <img src="../img/picture/sbkrskxmk.png" alt="">
+    </div>
+    <p class="pp">选中需要操作的项目,点击页面下方的入省考项目库按钮，项目即可进入省考项目库。已入库的项目在申报库中仍保留该项目。</p>
+    <p class="text">4.入领导联系项目库</p>
+    <div class="pic">
+        <img src="../img/picture/sbkrldlxxmk.png" alt="">
+    </div>
+    <p class="pp">选中需要操作的项目,点击页面下方的入领导联系项目库按钮，项目即可进入领导联系项目库。已入库的项目在申报库中仍保留该项目。</p>
+    <p class="text">5.项目驳回</p>
+    <div class="pic">
+        <img src="../img/picture/sbkxmbh.png" alt="">
+    </div>
+    <p class="pp">选中需要操作的项目,点击页面下方的项目驳回按钮，项目即可被驳回至上报单位。已驳回的项目在申报库中不再显示。</p>
+    
+</body>
+<script type="text/javascript" src="../bigger_pic/previewImage.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+     $(".pic img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>
+
+
+

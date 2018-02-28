@@ -24,14 +24,12 @@
 	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
     <script type="text/javascript" src="../js/doT.js"></script>
     <script>
-        var sessionid = localStorage.getItem("sessionid");
         $(function() {
             FastClick.attach(document.body);
             xmList();
         });
-        var data={};
         function xmList() {
-            zhget(PHB+";JSESSIONID=" + sessionid, data).then( function(result) {
+            zhpost(PHB, {}).then( function(result) {
                 result.aa=targetUrl;
                 var temp_text=doT.template($("#tempList").text())
                 $('#xm_list').html(temp_text(result));

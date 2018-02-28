@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>西安市重点建设项目综合管理平台</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+  ">
+  <link rel="stylesheet" href="./hui/css/hui.css">
+  <link rel="stylesheet" href="weui/weui.css">
+  <script src="weui/jquery-2.1.4.js"></script>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./fonts/font-awesome.min.css">
+  <link rel="stylesheet" href="weui/jquery-weui.css">
+  <link rel="stylesheet" href="swiper/idangerous.swiper.css">
+  <link href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="swiper/idangerous.swiper.js"></script>
+  <script src="weui/zepto.js"></script>
+  <script src="weui/fastclick.js"></script>
+  <script src="js/main.js"></script>
+  <script src="weui/jquery-weui.js"></script>
+  <script src="js/util.js"></script>
+  <script type="text/javascript" src="./hui/js/hui.js" charset="UTF-8"></script>
+  <script>
+      $(function() {
+      });
+  </script>
+  <style>
+    i{
+      display: inline-block;
+      margin: 19px;
+    }
+    .top{
+      position: relative;
+    }
+    .top_pic{
+      width: 100%;
+      height:350px;
+    }
+    img{
+      width: 100%;
+      height:100%;
+    }
+    
+    .pic_bottom ,.pic_top{
+      z-index: 999999;
+      border:2px solid red;
+      border-radius: 5px;
+    }
+    .pic_top{
+      height: 60px;
+    }
+    .pic_bottom{
+      margin-top: 5px;
+      height: 60px;
+    }
+    .span_text{
+      font-size: 14px;
+      font-weight: bold;
+
+    }
+    .person_info{
+      width: 100%;
+      height: 55px;
+      line-height: 55px;
+      color:#fff;
+      background-color: #FCCB40;
+      overflow: hidden;
+    }
+    .info_text{
+      display: inline-block;
+      float: left;
+      font-weight: bold;
+    }
+    .text3{
+      color:#6F91E3;
+
+    }
+    .text1{
+      color: #84D018;
+    }
+    .text2{
+      color: #59BCF5;
+    }
+    i.user{
+      float: left;
+      margin-right: 9px;
+      position: relative;
+      top: -2px;
+      font-size: 20px;
+    }
+    i.arrow{
+      float:right;
+    }
+
+
+
+    .weui-grid__label{
+      color: #888;
+      letter-spacing: 1px;
+    }
+
+    .bottom_sec{
+      border-top:1px solid #ccc;
+      color: #aaa;
+      font-size: 12px;
+      padding: 35px 0;
+    }
+    .bottom_sec p{
+      text-align: center;
+    }
+    .p_text4{
+      color: #1C86EE;
+    }
+
+    .banq{
+      height: 40px;
+      line-height: 40px;
+      background:url("./images/banq.png") left center no-repeat;
+      background-position:73px 4px;
+    }
+    .p_text{
+      height: 22px;
+      line-height: 22px;
+    }
+    .guide{
+      background-color: #F5F5F5;
+      height: 38px;
+      line-height: 38px;
+      color: #000;
+      font-weight: bold;
+      font-size: 14px;
+      padding-left: 20px;
+      font-family: "serif","微软雅黑";
+    }
+    .pic_left{
+      z-index: 999;
+      width: 140px;
+      height: 130px;
+      border:2px solid red;
+      border-radius: 5px;
+      position: absolute;
+      left:7px;
+      bottom:5px;
+    }
+    .pic_right{
+      z-index: 999;
+      width: 200px;
+      /*height: 130px;*/
+      border-radius: 5px;
+      position: absolute;
+      right:5px;
+      bottom:5px;
+    }
+    .pic_left img{
+      width: 48px;height: 48px;position: relative;top:30px;left:58px;
+    }
+    .pic_left span{
+      display: block;position: relative;top: 30px;left:32px;
+    }
+    .pic_top img{
+      width: 35px;height: 35px;position: relative;top:15px;left:10px;
+    }
+    .pic_top span{
+      position: relative;top:3px;left:10px;
+    }
+    .pic_bottom img{
+      width: 30px;height: 30px;position: relative;top:15px;left:10px;
+    }
+    .pic_bottom span{
+      position: relative;top:5px;left:10px;
+    }
+    /* 1440px */
+    @media screen and (max-width: 325px) {
+        .pic_left{
+          left:3px;
+          width: 120px;
+          height: 130px;
+        }
+        .pic_right{
+          right:3px;
+          width: 180px;
+        }
+         .pic_left img{
+            width: 48px;height: 48px;position: relative;top:30px;left:45px;
+          }
+          .pic_left span{
+            display: block;position: relative;top: 30px;left:25px;
+          }
+          .pic_top img{
+            width: 35px;height: 35px;position: relative;top:15px;left:10px;
+          }
+          .pic_top span{
+            position: relative;top:3px;left:10px;
+          }
+          .pic_bottom img{
+            width: 30px;height: 30px;position: relative;top:15px;left:10px;
+          }
+          .pic_bottom span{
+            position: relative;top:5px;left:10px;
+          }
+    }
+</style>
+</head>
+<body ontouchstart>
+ <div class="warp">
+  <div class="top">
+    <div class="top_pic">
+      <img src="./images/66n.gif" alt="" >
+    </div>
+    <div class="pic_left" onclick="ld()">
+      <img src="./images/cx.png" class="" style="">
+      <span class="span_text text3" style="">领导联系统计</span>
+    </div>
+    <div class="pic_right" >
+      <div class="pic_top" onclick="yph()">
+        <img src="./images/btn5.png" style="" >
+        <span class="span_text text1" style="">月度排行榜</span>
+
+      </div>
+      <div class="pic_bottom" onclick="zph()">
+        <img src="./images/btn6.png" style="" >
+        <span class="span_text text2" style="">总分值榜</span>
+
+      </div>
+    </div>
+  </div>
+  <div class="person_info" onclick="info()">
+    <i class="fa fa-user-circle user" aria-hidden="true"></i>
+    <span class="info_text">个人中心</span>
+    <i class="fa fa-chevron-right fa-lg arrow" aria-hidden="true"></i>
+  </div>
+  <div class="guide">
+    申报库
+  </div>
+  <div class="content">
+    <div class="weui-grids">
+      <a href="./xmgl_query/xjList.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query1.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+          续建项目
+        </p>
+      </a>
+      <a href="./xmgl_query/xkgList.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query2.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+          新开工项目
+        </p>
+      </a>
+      <a href="./xmgl_query/qqList.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query3.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+         前期项目
+       </p>
+     </a>
+   </div>
+   <div class="weui-grids">
+    <a href="./xmgl_query/jzkgList.html" class="weui-grid js_grid login">
+      <div class="weui-grid__icon">
+        <img src="./images/query4.png" alt="">
+      </div>
+      <p class="weui-grid__label">
+       集中开工项目
+     </p>
+   </a>
+             <!--  <a href="./xmgl/xjList.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/btn3.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                 PPP项目
+                </p>
+              </a> -->
+            </div>
+          </div>
+          <div class="guide">
+            项目库
+          </div>
+          <div class="content">
+            <div class="weui-grids">
+              <a href="./xmgl_query/xmk_xjList.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/query5.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                  续建项目
+                </p>
+              </a>
+              <a href="./xmgl_query/xmk_xkgList.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/query6.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                  新开工项目
+                </p>
+              </a>
+              <a href="./xmgl_query/xmk_qqList.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/query7.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                 前期项目
+               </p>
+             </a>
+           </div>
+           <div class="weui-grids">
+            <a href="./xmgl_query/xmk_jzkgList.html" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query8.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+               集中开工项目
+             </p>
+           </a>
+             <!--  <a href="./xmjz/main.html" class="weui-grid js_grid">
+                <div class="weui-grid__icon">
+                  <img src="./images/btn3.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                 PPP项目
+                </p>
+              </a> -->
+              <a href="./xmgl_query/xmk_ldlxList.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/query9.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                 领导联系项目
+               </p>
+             </a>
+           </div>
+         </div>
+         <div class="guide">
+          项目进展管理
+        </div>
+        <div class="content">
+          <div class="weui-grids">
+            <a href="./xmjz_query/zdxmydList.html?rklb=01" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query10.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                续建项目进展
+              </p>
+            </a>
+            <a href="./xmjz_query/zdxmydList.html?rklb=02" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query11.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                新开工项目进展
+              </p>
+            </a>
+            <a href="./xmjz_query/zdxmydList.html?rklb=03" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query12.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+               前期项目进展
+             </p>
+           </a>
+         </div>
+         <div class="weui-grids">
+          <a href="./xmjz_query/jzkgydList.html" class="weui-grid js_grid login">
+            <div class="weui-grid__icon">
+              <img src="./images/query13.png" alt="">
+            </div>
+            <p class="weui-grid__label">
+             集中开工项目进展
+           </p>
+         </a>
+             <!--  <a href="./xmjz/main.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/btn3.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                 PPP项目周进展
+                </p>
+              </a> -->
+            </div>
+          </div>
+          <div class="guide">
+            统计查询
+          </div>
+          <div class="content">
+            <div class="weui-grids">
+
+              <a href="./tjbb/ahy.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/cx2.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                  按行业统计
+                </p>
+              </a>
+              <a href="./tjbb/adw.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/cx1.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                  按单位统计
+                </p>
+              </a>
+
+
+              <a href="./tjbb/hymx.html" class="weui-grid js_grid login">
+                <div class="weui-grid__icon">
+                  <img src="./images/query14.png" alt="">
+                </div>
+                <p class="weui-grid__label">
+                  月度行业明细表
+                </p>
+              </a>
+
+            </div>
+            <div class="weui-grids">
+             <a href="./tjbb/dwmx.html" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query15.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                月度单位明细表
+              </p>
+            </a>
+            <a href="./tjbb/ykgxm.html" class="weui-grid js_grid login">
+              <div class="weui-grid__icon">
+                <img src="./images/query16.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+               已开工项目表
+             </p>
+           </a>
+           <a href="./tjbb/yjgxm.html" class="weui-grid js_grid login">
+            <div class="weui-grid__icon">
+              <img src="./images/query17.png" alt="">
+            </div>
+            <p class="weui-grid__label">
+             已竣工项目表
+           </p>
+         </a>
+       </div>
+       <div class="weui-grids">
+        <a href="./tjbb/ydxx.html" class="weui-grid js_grid login">
+          <div class="weui-grid__icon">
+            <img src="./images/query18.png" alt="">
+          </div>
+          <p class="weui-grid__label">
+           用地信息统计表
+         </p>
+       </a>
+     </div>
+   </div>
+   <div class="guide">
+    统计图表
+  </div>
+  <div class="content">
+    <div class="weui-grids">
+      <a href="./tjtb/ahy.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query19.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+          月度行业统计图
+        </p>
+      </a>
+      <a href="./tjtb/adw.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query20.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+          月度单位统计图
+        </p>
+      </a>
+      <a href="./tjtb/gyfl.html" class="weui-grid js_grid login">
+        <div class="weui-grid__icon">
+          <img src="./images/query21.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+         各月分类统计图
+       </p>
+     </a>
+   </div>
+   <div class="weui-grids">
+    <a href="./tjtb/dyzx.html" class="weui-grid js_grid login">
+      <div class="weui-grid__icon">
+        <img src="./images/query22.png" alt="">
+      </div>
+      <p class="weui-grid__label">
+       单月纵向对比图
+     </p>
+   </a>
+ </div>
+</div>
+       
+          <div class="bottom_sec">
+           <p class="p_text1 banq">西安市发改委&nbsp;&nbsp;版权所有</p>
+           <p class="p_text">西安卓精科技技术支持</p>
+           <p class="p_text4 p_text">客服热线：029-86698068</p>
+         </div>
+       </div>
+     </body>
+     <script>
+
+      function yph(){
+        if(!isLogin()){
+          window.location.href=webName+"/login.html";
+        }else{
+          window.location.href="./phb/phb.html";
+        }
+      }
+      function zph(){
+       if(!isLogin()){
+         window.location.href=webName+"/login.html";
+       }else{
+        window.location.href="./phb/zfz.html";
+       } 
+     }
+     function ld(){
+      if(!isLogin()){
+       window.location.href=webName+"/login.html";
+      }else{
+       window.location.href="./tjbb/ldlx.html";
+      } 
+     }
+</script>
+</html>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PreviewImage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+    <style>
+        body{
+          width: 375px;
+          max-width: 375px;
+          text-align: center;
+        }
+        .imgs-box img {
+          width: 50%;
+          margin-bottom: 20px;
+        }
+        .previewImage-text{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h3>Click this images to preview</h3>
+    <div class="imgs-box" id="img_box">
+        <img src="./image/1.jpg" alt="">
+        <img src="./image/2.jpg" alt="">
+        <img src="./image/3.jpg" alt="">
+    </div>
+</body>
+<script src="./previewImage.min.js"></script>
+<script>
+    $(".imgs-box img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>

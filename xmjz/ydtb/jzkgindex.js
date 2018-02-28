@@ -74,7 +74,7 @@ function imgDelect(obj){
         sctplj:sctplj
     }
     hui.confirm('您确定要删除吗？', ['取消','确定'], function(){
-        zhpost(JZDELECTPIC+";JSESSIONID=" + sessionid, data).then( function(result) {
+        zhpost(JZDELECTPIC+";JSESSIONID=" + sessionid, data).then(function(result) {
              if(result=="删除成功"){
                 $(obj).remove();
                 hui.upToast('删除成功!')
@@ -85,7 +85,7 @@ function imgDelect(obj){
     });
 }
 // 删除图片
-function imgRemove(info){
+function imgRemove(info){   
     var src=$(info).attr("src")
         hui.confirm('您确定要删除吗？', ['取消','确定'], function(){
             imgArr.removeByValue(src);

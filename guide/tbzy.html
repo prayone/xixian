@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>填报指引</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+        <style type="text/css">
+        body{
+            background: url("../img/picture/bg.png") center center repeat-y;
+            background-size:cover;
+        }
+        img{
+            width:100%;
+        }
+        .text{
+            margin:15px 0 10px 10px;
+            color: #337AB7;
+            font-size: 14px;
+        }
+        .pp{
+            margin:0 10px 10px 10px;
+            font-size: 14px;
+        }
+        .pic{
+            width:95%;
+            text-align: center;
+            margin:0 auto;
+        }
+        .previewImage-text{
+            display: none;
+        }
+        .previewImage-image{
+            width:100%;
+            
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <p class="text">项目录入</p>
+    <p class="text">1.项目录入</p>
+    <p class="pp">点开项目录入菜单，按照“续建”，“新开工”与“前期”选择相应的项目录入。</p>
+    <div class="pic">
+        <img src="../img/picture/xmlr.png" alt="">
+    </div>
+    <p class="pp"> <span style="color:red;">*</span> 为必填项，填写完成后点击页面下方的保存按钮，提示保存成功后即录入完成。 </p>
+    <p class="text">2.批量导入</p>
+    <div class="pic">
+        <img src="../img/picture/pldr.png" alt="">
+    </div>
+    <p class="pp">在相应的录入页面，点击红框处进入批量导入页面。 </p>
+    <p class="text">2.1下载模板</p>
+    <div class="pic">
+        <img src="../img/picture/xzmb.png" alt="">
+    </div>
+    <p class="pp">点击模版下载按钮下载Execl模版。</p>
+    <div class="pic">
+        <img src="../img/picture/excelmb.png" alt="">
+    </div>
+    <p class="pp">将数据整理至Excel中。</p>
+    <p class="text">2.2导入Excel</p>
+    <div class="pic">
+        <img src="../img/picture/drexcel.png" alt="">
+    </div>
+    <p class="pp">点击上传按钮上传刚刚整理好的Excel ，点击导入按钮上传成功。</p>
+    <p class="text">2.3错误信息提示</p>
+    <div class="pic">
+        <img src="../img/picture/cwxxts.png" alt="">
+    </div>
+    <p class="pp">导入Excel失败后根据提示信息修改Excel重新导入。</p>
+    <p class="text">月度进展</p>
+    <p class="pp">点开月度进展菜单，按照“重点”，“省考”与“领导联系”填报相应的项目月进展，下面以填报重点项目月进展为例。 </p>
+    <p class="text">1.月度填报/修改</p>
+    <div class="pic">
+        <img src="../img/picture/ydxg.png" alt="">
+    </div>
+    <p class="pp">将列表拉至最后一列进行操作，点击修改或填报按钮可修改或填报月进展。</p>
+    <div class="pic">
+        <img src="../img/picture/ydsc.png" alt="">
+    </div>
+    <p class="pp">点击浏览按钮可上传图片，可重复点击此按钮上传多张图片。</p>
+    
+    <p class="text">2.月度删除</p>
+    <div class="pic">
+        <img src="../img/picture/yddel.png" alt="">
+    </div>
+    <p class="pp">选中需要操作的项目,点击页面下方的删除月度按钮，月度进展即可被删除。</p>
+    
+</body>
+<script type="text/javascript" src="../bigger_pic/previewImage.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+     $(".pic img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>
+
+
+

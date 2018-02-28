@@ -50,6 +50,7 @@ function submit(){
             data[$(this).attr('name')] = $(this).val()
         })
     data.jztp1=imgArr
+    console.log(JSON.stringify(data));
     zhpost(ZDXMSAVE+";JSESSIONID=" + sessionid, data).then( function(result) {
                  console.log(result)   
                  if(result=="success"){

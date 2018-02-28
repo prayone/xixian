@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>个人中心</title>
+  <link rel="stylesheet" href="weui/weui.css">
+  <script src="weui/jquery-2.1.4.js"></script>
+  <link rel="stylesheet" href="weui/jquery-weui.css">
+  <script src="weui/zepto.js"></script>
+  <script src="weui/fastclick.js"></script>
+  <script src="weui/jquery-weui.js"></script>
+  <script src="js/util.js"></script>
+  <style>
+  body{
+    background-color: #efefef;
+  }
+  
+  button{
+    width:60%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #056CAE;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    border:none;
+    font-weight: bold;
+  }
+  .top_pic{
+    width: 100%;
+    height:210px;
+  }
+</style>
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+    var user=getUser();
+    $(".name").append(user.name);
+    $(".loginname").append(user.loginName);
+    $(".mobile").append(user.mobile);
+    $(".company").append(user.company.name);
+    $(".role").append(user.roleNames);
+  });
+  function login_out(){
+    var index_i =localStorage.getItem("index_i");
+    clearlocalStorage();
+    localStorage.setItem("index_i",index_i);
+    location.href="./login.html";
+  }
+</script>
+<style>
+.weui-label{
+  color:#056CAF;
+}
+</style>
+</head>
+<body ontouchstart>
+  <header class='demos-header'>
+    <img src="./images/3.gif" class="top_pic" alt="" >
+  </header>
+  <div class="weui-cells">
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">姓 名:</label></div>
+      <div class="weui-cell__bd name">
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">登录名:</label></div>
+      <div class="weui-cell__bd loginname">
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">手机号:</label></div>
+      <div class="weui-cell__bd mobile">
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">归属单位:</label></div>
+      <div class="weui-cell__bd company">
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">归属角色:</label></div>
+      <div class="weui-cell__bd role">
+      </div>
+    </div>
+  </div>
+  <div class="weui-btn-area">
+    <a class="weui-btn weui-btn_warn" onclick="login_out()" href="javascript:" id="showTooltips">退出登录</a>
+  </div>
+</body>
+<script>
+ 
+</script>
+</html>

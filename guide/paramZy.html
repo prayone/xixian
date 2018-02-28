@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>参数设置</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+       ">
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <link rel="stylesheet" href="../swiper/idangerous.swiper.css">
+    <link rel="stylesheet" href="../hui/css/hui.css">
+    <script src="../swiper/idangerous.swiper.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../js/util.js"></script>
+    <script type="text/javascript" src="../hui/js/hui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../hui/js/hui-accordion.js"></script>
+    <style type="text/css">
+        body{
+            background: url("../img/picture/bg.png") center center repeat-y;
+            background-size:cover;
+        }
+        img{
+            width:100%;
+        }
+        .text{
+            margin:15px 0 10px 10px;
+            color: #337AB7;
+            font-size: 16px;
+        }
+        .pp{
+            margin:0 0 10px 10px;
+            font-size: 14px;
+        }
+        .pic{
+            width:95%;
+            text-align: center;
+            margin:0 auto;
+        }
+         .previewImage-text{
+            display: none;
+        }
+        .previewImage-image{
+            width:100%;
+            
+        }
+    </style>
+    
+</head>
+<body ontouchstart>
+    <p class="text">1.参数设置</p>
+    <p class="pp">用于设置系统中相应参数，目前参数设置只支持修改</p>
+    <p class="pp">若修改请参照系统中的参数说明</p>
+    <div class="pic">
+        <img src="../img/picture/param1.png" alt="">
+    </div>
+    <p class="pp">在相应的录入页面，点击红框处进入批量导入页面。</p>
+    <p class="text">2.参数设置修改</p>
+    <div class="pic">
+        <img src="../img/picture/param2.png" alt="">
+    </div>
+    <p class="pp">输入对应信息完成后点击保存按钮，即修改参数成功。</p>
+
+</body>
+<script type="text/javascript" src="../bigger_pic/previewImage.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+     $(".pic img").click(function(){
+       var pic_arr=[];
+       var url_pic=$(this).attr("src");
+       pic_arr.push(url_pic);
+       var obj = {
+            urls : pic_arr,
+            current : url_pic
+        };
+        previewImage.start(obj);
+    })
+</script>
+</html>
+
+
+

@@ -23,6 +23,12 @@
         $(function() {
             FastClick.attach(document.body);
             hui.accordion(true, true);
+            var user_name=localStorage.getItem("user_name");
+            var pass_word=localStorage.getItem("pass_word"); 
+            if(!user_name){
+                window.location.href="../login.html";
+            }
+
 
     });
     </script>

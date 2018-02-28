@@ -1,0 +1,496 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单月纵向对比图</title>
+     <link rel="stylesheet" href="../css/demo.css" type="text/css">
+    <link rel="stylesheet" href="../css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="../date-picker/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/doT.js"></script>
+    <script src="../weui/jquery-2.1.4.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../weui/fastclick.js"></script>
+    <script src="../weui/jquery-weui.js"></script>
+    <script src="../weui/zepto.js"></script>
+    <script src="../date-picker/moment.js"></script>
+    <script type="text/javascript" src="../js/jquery.ztree.core.js"></script>
+    <script src="../date-picker/bootstrap-datetimepicker.js"></script>
+    <script src="../js/hylbinit.js"></script>
+    <script type="text/javascript" src="../js/jquery.imgbox.pack.js"></script>
+    <script type="text/javascript" src="../js/esl.js"></script>
+    <script type="text/javascript" src="../js/Echarts.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <style>
+        .hylbinit{
+            align-items:
+            flex-start
+            ;
+            background-clip:
+            padding-box
+            ;
+            background-color:
+            rgb(238, 238, 238)
+            ;
+            border-bottom-color:
+            rgb(204, 204, 204)
+            ;
+            border-bottom-left-radius:
+            3px
+            ;
+            border-bottom-right-radius:
+            3px
+            ;
+            border-bottom-style:
+            solid
+            ;
+            border-bottom-width:
+            1px
+            ;
+            border-image-outset:
+            0px
+            ;
+            border-image-repeat:
+            stretch
+            ;
+            border-image-slice:
+            100%
+            ;
+            border-image-source:
+            none
+            ;
+            border-image-width:
+            1
+            ;
+            border-left-color:
+            rgb(204, 204, 204)
+            ;
+            border-left-style:
+            solid
+            ;
+            border-left-width:
+            1px
+            ;
+            border-right-color:
+            rgb(204, 204, 204)
+            ;
+            border-right-style:
+            solid
+            ;
+            border-right-width:
+            1px
+            ;
+            border-top-color:
+            rgb(204, 204, 204)
+            ;
+            border-top-left-radius:
+            3px
+            ;
+            border-top-right-radius:
+            3px
+            ;
+            border-top-style:
+            solid
+            ;
+            border-top-width:
+            1px
+            ;
+            box-sizing:
+            border-box
+            ;
+            color:
+            rgb(51, 51, 51)
+            ;
+            cursor:
+            pointer
+            ;
+            display:
+            inline-block
+            ;
+            font-family:
+            "Helvetica Neue", Helvetica, sans-serif
+            ;
+            font-size:
+            14px
+            ;
+            font-stretch:
+            100%
+            ;
+            font-style:
+            normal
+            ;
+            font-variant-caps:
+            normal
+            ;
+            font-variant-east-asian:
+            normal
+            ;
+            font-variant-ligatures:
+            normal
+            ;
+            font-variant-numeric:
+            normal
+            ;
+            font-weight:
+            400
+            ;
+            height:
+            30px
+            ;
+            letter-spacing:
+            normal
+            ;
+            line-height:
+            19.88px
+            ;
+            list-style-image:
+            none
+            ;
+            list-style-position:
+            outside
+            ;
+            list-style-type:
+            circle
+            ;
+            margin-bottom:
+            0px
+            ;
+            margin-left:
+            0px
+            ;
+            margin-right:
+            0px
+            ;
+            margin-top:
+            0px
+            ;
+            outline-color:
+            rgb(51, 51, 51)
+            ;
+            outline-style:
+            none
+            ;
+            outline-width:
+            0px
+            ;
+            padding-bottom:
+            6px
+            ;
+            padding-left:
+            12px
+            ;
+            padding-right:
+            12px
+            ;
+            padding-top:
+            6px
+            ;
+            position:
+            relative
+            ;
+            text-align:
+            center
+            ;
+            text-indent:
+            0px
+            ;
+            text-rendering:
+            auto
+            ;
+            text-shadow:
+            none
+            ;
+            text-size-adjust:
+            100%
+            ;
+            text-transform:
+            none
+            ;
+            transition-delay:
+            0s
+            ;
+            transition-duration:
+            0.2s
+            ;
+            transition-property:
+            all
+            ;
+            transition-timing-function:
+            linear
+            ;
+            user-select:
+            none
+            ;
+            vertical-align:
+            top
+            ;
+            white-space:
+            nowrap
+            ;
+            word-spacing:
+            0px
+            ;
+            writing-mode:
+            horizontal-tb
+            ;
+            -webkit-appearance:
+            none
+            ;
+            -webkit-rtl-ordering:
+            logical
+            ;
+            -webkit-tap-highlight-color:
+            rgba(0, 0, 0, 0)
+            ;
+            -webkit-border-image:
+            none
+            ;
+        }
+        body{
+          color:14px;
+          position: relative;
+        }
+        thead{
+          background-color: #F5FBFF;
+        }
+        .search{
+            position: fixed;
+            text-align: center;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+        .warp{
+          position: relative;   
+        }
+        .well{
+          margin-bottom: 0;
+        }
+        .well ul li{
+          text-align: left;
+          padding-left: 10px;
+        }
+    </style>
+    <script>
+
+        $(function () {
+
+            FastClick.attach(document.body);
+            var jsnd;
+            var jsndh;
+            var month;
+             zhpost(DYZXTJTB_parameter, {}).then( function(data) {
+                console.log(data)
+                jsnd=data.jsnd;
+                jsndh=data.jsndh;
+                month=data.month;
+                initDate();
+                        
+               $("#date1").val(jsnd);
+               $("#date2").val(jsndh);
+
+               $("#option").val(month);
+               $("#option").text(month+"月份");
+               
+
+
+             });
+            
+            $('#collapseExample').on('show.bs.collapse', function () {
+               $("#search_img").attr("src","../img/top.png")
+           })
+            $('#collapseExample').on('hide.bs.collapse', function () {
+               $("#search_img").attr("src","../img/bottom.png")
+           })
+            showEcharts();
+        });
+
+        function showEcharts() {
+            var list = [
+                {name: "个数", lab: "hnum", y: 1},
+                {name: "总投资", lab: "hztz", y: 0},
+                {name: "年度投资", lab: "hnjhtz", y: 0},
+                {name: "累计投资", lab: "hydtz", y: 0},
+                {name: "占年度比", lab: "zndtz", y: 1}
+            ];
+            if ($("#rklb").val() == '03') {
+                list = [
+                    {name: "个数", lab: "hnum", y: 1},
+                    {name: "总投资", lab: "hztz", y: 0}
+                ];
+            }
+            require.config({
+                paths: {
+                    'echarts' : 'http://echarts.baidu.com/build/dist'
+                }
+            });
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/bar',
+                    'echarts/chart/line'
+                ],
+                function (ec) {
+                    $('#collapseExample').collapse('hide');
+                    var xmlb=$('#xmlb').val();
+                    var jsnd=$('#date1').val();
+                    var jsndh=$('#date2').val();
+                    var month=$('#yuefen').val();
+
+                    var data={
+                        jsnd:jsnd,
+                        jsndh:jsndh,
+                        month:month,
+                        rklb:xmlb
+                    };
+                    zhpost(DYZXTJTB, data).then( function(data) {
+                        $("#main").width((data.dataList.length) * 120 <= 600 ? 600 : (data.dataList.length) * 12);
+                       var option = ECharts.ChartOptionTemplates.Bars(data.dataList, 'Love', false, true);
+                            var myChart = ec.init(document.getElementById('main'));
+                            var dds = option.xAxis[0].data;
+                            for (var i = 0; i < dds.length; i++) {
+                                var str = dds[i];
+                                var str1 = "";
+                                if (null != str) {
+                                    for (var j = 0; j < str.length; j++) {//循环遍历值字符串，每个字符后加回车，达到竖排效果。
+                                        if ((str.length - j) >= 4) {
+                                            str1 += str.substr(j, 4) + "\n";
+                                            j += 3;
+                                        } else {
+                                            str1 += str.substr(j, 1);
+                                        }
+                                    }
+                                }
+                                dds[i] = str1;
+                            }
+                            myChart.setOption({
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {  // 标签 图例
+                                    selectedMode: false,
+                                    data: option.legend
+                                },
+                                toolbox: {    //
+                                    show: true,
+                                    feature: {
+                                        mark: {show: false},  //
+                                        dataView: {show: false, readOnly: false},   // 鼠标放到上面显示的数据
+                                        magicType: {show: true, type: ['line', 'bar']},   //line 拆线图   柱状图
+                                        restore: {show: false},      //
+                                        saveAsImage: {show: true}   //保存图片按钮
+                                    }
+                                },
+                                calculable: false,
+                                xAxis: [  //X轴
+                                    {
+                                        type: 'category',
+                                        axisLabel: {'interval': 0},
+                                        data: option.xAxis[0].data,
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value',
+                                        name: '单位：亿元',
+                                        axisLabel: {
+                                            formatter: '{value}'
+                                        },
+                                        splitNumber: 10,
+                                        splitArea: {show: true}
+
+                                    }
+                                ],
+                                series: option.series,
+                            });
+                    });
+                    
+                });
+        }
+
+       
+
+        function sp(str) {
+            var str1 = "";
+            if (null != str) {
+                for (var j = 0; j < str.length; j++) {//循环遍历值字符串，每个字符后加回车，达到竖排效果。
+                    if ((str.length - j) >= 6) {
+                        str1 += str.substr(j, 6) + "\n";
+                        j += 5;
+                    } else {
+                        str1 += str.substr(j, 1);
+                    }
+                }
+            }
+            return str1;
+        }
+    </script>
+</head>
+<body>
+    <div class="warp">
+        <div class="search" style="">
+           <div class="collapse coll" id="collapseExample">
+             <div class="well">
+               <!-- 查询列表 -->
+               <ul class="nav navbar-nav navbar-right">
+                 <li style="margin-top:16px">
+                    <font style="color: #888;position: relative;top:4px;">项目类别：</font>
+                    <select style="height: 30px;width:50%;border-color:#bbb;" id="xmlb" class="sele">
+                        <option value="">续建和新开工</option>
+                        <option value="02">新开工</option>
+                        <option value="01">续建</option>
+                        <option value="03">前期</option>
+                    </select>
+                     <button type="button" id="cx" onclick="showEcharts();" class="btn btn-primary btn-sm" style="position: relative;top: -2px;left:28px;display: inline-block;">
+                        查询
+                    </button>
+                </li>
+              <li class="" style="margin-top: 16px;">
+                <font style="color: #888">年月:</font>
+                <div class="iDate date" style="margin-left: 10px">
+                    <input type="text" id="date1" style="" >
+                    <button type="button" class="addOn"></button>
+                </div>
+                <span>  --</span>
+                <div class="iDate date" id="" style="margin-left: 4px">
+                    <input type="text" id="date2" style="" >
+                    <button type="button" class="addOn"></button>
+                </div>
+                   
+                </li>
+                 <li class="" style="margin-top: 16px;">
+                    <font style="color: #888" >月份:</font>
+                    <select name="" id="yuefen" style="height: 30px;width:30%;border-color:#bbb;margin-left: 37px;" >
+                        <option id="option" selected="selected" value="" style="color:red;margin-bottom: 5px;"></option>
+                        <option value="1">1月份</option>
+                        <option value="2">2月份</option>
+                        <option value="3">3月份</option>
+                        <option value="4">4月份</option>
+                        <option value="5">5月份</option>
+                        <option value="6">6月份</option>
+                        <option value="7">7月份</option>
+                        <option value="8">8月份</option>
+                        <option value="9">9月份</option>
+                        <option value="10">10月份</option>
+                        <option value="11">11月份</option>
+                        <option value="12">12月份</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <a class="search_img" role="button" data-toggle="collapse" href="#collapseExample" >
+       <img src="../../img/bottom.png" id="search_img" alt="">
+   </a>
+   <!-- collapse结束 -->
+</div>
+</div>
+    <div id="main" style="height:500px;overflow: auto;position:relative;top:38px;">
+
+    </div>
+</body>
+</html>

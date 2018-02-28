@@ -29,7 +29,7 @@
             }
             .li_list{
             border-bottom: 1px solid #3EAFE0!important;
-            padding: 10px 0 10px 20px!important;
+            padding: 10px 0 10px 5px!important;
             }
             .search{
                 position: absolute;
@@ -143,8 +143,11 @@
         <script type="text/x-dot-template" id="tempList">
             {{~it.page.list:value:index}}
             <li class="li_list"  id="li_list">
-                <a class="listItem" tid="{{= value.id}}" href="javascript:0">
-                    <div class="hui-media-content">
+               <a class="listItem" tid="{{= value.id}}" href="javascript:0" style="display: block;overflow: hidden;">
+                   <div class="xm_pic" style="float: left;width:120px;height:110px;">
+                        <img src="{{=it.base_url}}{{=value.pic}}" onerror="this.src='../images/xm_list.jpg'" alt="" style="height:100px;">
+                    </div>
+                    <div class="hui-media-content" style="float: left;margin-left:10px;width:60%;">
                         <h4>{{= value.xmmc}}</h4>
                         <h5 class="ztz">总投资：{{=value.ztz}} 万元</h5>
                         <h5>责任单位：{{=value.zrdw.name}}</h5>
@@ -191,7 +194,7 @@
                             })
                     mui('body').on('tap', 'a.listItem', function () { 
                         var id=$(this).attr("tid")
-                        document.location.href ="./xq/xjdetail.html?id="+id });
+                        document.location.href ="./xq/xjdetail.html?id="+id+"&lblb=sbk&xmlb=sbkxkg" });
                 })
                 var sessionid = localStorage.getItem("sessionid");
                 var defaultdate;
@@ -202,6 +205,7 @@
                  function xmList() {
                     zhpost(XKGLIST+";JSESSIONID=" + sessionid, data).then( function(result) {
                         console.log(result)
+                        result.base_url=targetUrl;
                         defaultdate=result.xmMain.jsnd;
                         var temp_text=doT.template($("#tempList").text())
                         $('#xm_list').html(temp_text(result));
